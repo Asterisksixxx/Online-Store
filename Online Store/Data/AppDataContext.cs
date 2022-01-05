@@ -12,5 +12,8 @@ namespace Online_Store.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<SubSection> SubSections { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<NotConfirmUser> NotConfirmUsers { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

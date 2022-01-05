@@ -1,3 +1,22 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using System.Security.Claims
+@{
+    if (Context.User.FindFirst("Role") != null)
+    {
+        switch (Context.User.FindFirstValue("Role"))
+        {
+            case "0":
+                Layout = "NotConfirmUserLayout";
+                break;
+            case "1":
+                Layout = "_Layout";
+                break;
+            case "2":
+                Layout = "ADMIN_Layout";
+                break;
+        }
+    }
+    else
+    {
+        Layout = "NotConfirmUserLayout";
+    }
 }

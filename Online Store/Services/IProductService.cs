@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
 using Online_Store.Models;
 
@@ -9,12 +10,11 @@ namespace Online_Store.Services
 {
     public interface IProductService
     {
-        IEnumerable<Product> GetAsync();
-        Product GetAsync(Guid id);
+      Task<IEnumerable<Product>>  GetAsync();
+       Task<Product> GetAsync(Guid id);
         Task CreateAsync(Product product);
         void Delete(Guid id);
         Task Update(Product product);
-
     }
 
     public class ProductService : IProductService
@@ -26,14 +26,15 @@ namespace Online_Store.Services
             _appDataContext = appDataContext;
         }
 
-        public IEnumerable<Product> GetAsync()
+        public async Task<IEnumerable<Product>>  GetAsync()
         {
-            return _appDataContext.Products;
+            return await _appDataContext.Products.ToListAsync();
         }
 
-        public  Product GetAsync(Guid id)
+        public async Task<Product> GetAsync(Guid id)
         {
-            return  _appDataContext.Products.FirstOrDefault(p => p.Id == id);
+            return await _appDataContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            
         }
 
         public Task CreateAsync(Product product)
@@ -45,6 +46,7 @@ namespace Online_Store.Services
         public void Delete(Guid id)
         {
             _appDataContext.Products.Remove(_appDataContext.Products.FirstOrDefault(product => product.Id == id));
+            _appDataContext.SaveChanges();
         }
 
         public Task Update(Product product)

@@ -1,0 +1,9 @@
+﻿@model NotConfirmUser
+<h6>Don't close this Page</h6>
+<div>
+    <p>A code has been sent to your email, enter it here to confirm the mail and add a user</p>
+</div>
+<form asp-controller="NotConfirmUser" asp-action="Confirm" method="post">
+    <input name="code" type="text" id="code" />
+    <input class="btn btn-primary" type="submit" asp-route="@Model"/>
+</form>

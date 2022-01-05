@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
+using Online_Store.Services;
 
 namespace Online_Store
 {
@@ -28,6 +30,15 @@ namespace Online_Store
             services.AddControllersWithViews();
             services.AddDbContext<AppDataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DC")));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/User/Login");
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/User/Login");
+                });
+            services.AddScoped<INotConfirmUserService, NotConfirmUserService>();
+            services.AddScoped<IProductService,ProductService>();
+            services.AddScoped<IUserService,UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +60,7 @@ namespace Online_Store
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
