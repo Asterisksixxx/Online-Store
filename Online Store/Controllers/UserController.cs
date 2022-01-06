@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -9,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Online_Store.Data;
 using Online_Store.Models;
 using Online_Store.Services;
+using Online_Store.ViewModels;
 
 namespace Online_Store.Controllers
 {
@@ -23,6 +21,30 @@ namespace Online_Store.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details()
+        {
+            var user = await _userService.GetAsyncOne(
+                this.HttpContext.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType));
+            EditUserViewModel userEdit = new EditUserViewModel
+            {
+                Email = user.Email,
+                Name = user.Name,
+                Surname = user.Surname,
+                DataBorn = user.DataBorn,
+                Number = user.Number,
+                Id = user.Id,
+            };
+            return  View(userEdit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Details(EditUserViewModel userEdit)
+        {
+            await _userService.Update(userEdit);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -30,16 +52,16 @@ namespace Online_Store.Controllers
         [HttpPost]
         public async Task<IActionResult>  Login(User use)
         {
-            var user = _userService.GetAsyncOne(use.Email,use.Password);
+            var user = await _userService.GetOne(use.Login,use.Password);
             if (user != null)
             {
                await Authenticate(user);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            ModelState.AddModelError("", "Not correct Login or Password");
             return View(use);
         }
-        public async  Task Authenticate(User user)
+        public async Task Authenticate(User user)
         {
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(_userService.Authenticate(user)));

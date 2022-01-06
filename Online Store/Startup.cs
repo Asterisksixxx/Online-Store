@@ -4,10 +4,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
@@ -39,6 +35,7 @@ namespace Online_Store
             services.AddScoped<INotConfirmUserService, NotConfirmUserService>();
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IUserService,UserService>();
+            services.AddScoped<ISectionService, SectionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
 using Online_Store.Models;
@@ -16,7 +17,7 @@ namespace Online_Store.Services
         Task CreateAsync(NotConfirmUser notConfirmUser);
         void Delete(Guid id);
         Task Update(NotConfirmUser notConfirmUser);
-        bool Check(string name, string email);
+        bool Check(string name, string login);
     }
 
    public class NotConfirmUserService : INotConfirmUserService
@@ -37,10 +38,10 @@ namespace Online_Store.Services
        {
            return await _appDataContext.NotConfirmUsers.FirstOrDefaultAsync(user => user.Id == id);
        }
-       public bool Check(string name, string email)
+       public bool Check(string name, string login)
        {
            if (_appDataContext.NotConfirmUsers.FirstOrDefault(u => u.Name == name) != null) return true;
-           if (_appDataContext.NotConfirmUsers.FirstOrDefault(u => u.Email == email) != null) return true;
+           if (_appDataContext.NotConfirmUsers.FirstOrDefault(u => u.Login==login) != null) return true;
            return false;
        }
 
@@ -59,6 +60,7 @@ namespace Online_Store.Services
                    if (rdch == 1) { Code += Convert.ToChar(rdbukver.Next(41, 67)); }
                    else { Code += rdnumber.Next(0,10).ToString(); }
                }
+               string message=
                notConfirmUser.Code = Code;
                EmailService mailService = new EmailService();
                await mailService.SendEmailAsync(notConfirmUser.Email, "Confirm Account and Email", notConfirmUser.Code);

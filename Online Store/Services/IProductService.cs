@@ -37,10 +37,10 @@ namespace Online_Store.Services
             
         }
 
-        public Task CreateAsync(Product product)
+        public async Task CreateAsync(Product product)
         {
-            _appDataContext.Products.AddAsync(product);
-          return _appDataContext.SaveChangesAsync();
+           await _appDataContext.Products.AddAsync(product);
+          await _appDataContext.SaveChangesAsync();
         }
 
         public void Delete(Guid id)

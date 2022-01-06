@@ -1,6 +1,6 @@
 ﻿@model User
 
-<h2>Вход на сайт</h2>
+<h2>Login</h2>
 
 <div class="cotainer">
     <div class="row justify-content-center">
@@ -10,10 +10,10 @@
                     <form asp-action="Login" asp-controller="User" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group row">
-                        <label asp-for="Email" for="Email" class="col-md-4 col-form-label text-md-right">Email</label>
+                        <label asp-for="Login" for="Login" class="col-md-4 col-form-label text-md-right">Login</label>
                         <div class="col-md-6">
-                            <input asp-for="Email" type="text" id="Email" class="form-control" name="Email" required autofocus>
-                            <span asp-validation-for="Email" />
+                            <input asp-for="Login" type="text" id="Login" class="form-control" name="Login" required autofocus>
+                            <span asp-validation-for="Login" />
                         </div>
                     </div>
 
@@ -25,8 +25,8 @@
                         </div>
                     </div>
                     <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">Войти</button>
-                        <a asp-action="Registration" asp-controller="NotConfirmUser" class="btn btn-link">Регистрация</a>
+                        <button type="submit" class="btn btn-primary">Go in!</button>
+                        <a asp-action="Registration" asp-controller="NotConfirmUser" class="btn btn-link">Registration</a>
                     </div>
                 </div>
             </div>

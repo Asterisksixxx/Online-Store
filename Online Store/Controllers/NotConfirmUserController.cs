@@ -28,7 +28,7 @@ namespace Online_Store.Controllers
         {
 
             if (!ModelState.IsValid) return View();
-            if (!_notConfirmUserService.Check(notConfirmUser.Name, notConfirmUser.Email))
+            if (!_notConfirmUserService.Check(notConfirmUser.Name, notConfirmUser.Login))
             {
                 await _notConfirmUserService.CreateAsync(notConfirmUser);
                 return RedirectToAction("Confirm", "NotConfirmUser", notConfirmUser);
