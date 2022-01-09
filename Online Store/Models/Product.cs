@@ -10,6 +10,12 @@ namespace Online_Store.Models
         public Guid SubSectionId { get; set; }
         public decimal Cost { get; set; }
         public string Information { get; set; }
-        public string PictureLink { get; set; }
+        public string PictureGeneral { get; set; }
+        public double Score { get; set; }
+        public int ViewCount { get; set; }
+        public string Picture0 { get; set; }
+        public string Picture1 { get; set; }
+        public string Picture2 { get; set; }
+        public string Picture3 { get; set; }
     }
 }

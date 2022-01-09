@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace Online_Store.Models
 {
@@ -9,5 +9,7 @@ namespace Online_Store.Models
         public string Name { get; set; }
         public Section Section { get; set; }
         public Guid SectionId { get; set; }
+        public List<Product> Product =new List<Product>();
+        public uint ProductCount { get; set; }
     }
 }

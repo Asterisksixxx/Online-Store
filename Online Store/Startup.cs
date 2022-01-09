@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +35,7 @@ namespace Online_Store
             services.AddScoped<IProductService,ProductService>();
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<ISectionService, SectionService>();
+            services.AddScoped<ISubSectionService, SubSectionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

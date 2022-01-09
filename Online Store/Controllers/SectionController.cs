@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Online_Store.Services;
 
 namespace Online_Store.Controllers
@@ -16,14 +12,15 @@ namespace Online_Store.Controllers
         {
             _sectionService = sectionService;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             return View(await _sectionService.GetAllAsync());
         }
-
-        public IActionResult Create()
+        [HttpGet]
+        public  IActionResult Create()
         {
+            //ViewBag.ListSubSection = new SelectList();
             return View();
         }
 

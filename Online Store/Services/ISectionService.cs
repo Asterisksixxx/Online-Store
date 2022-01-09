@@ -13,6 +13,7 @@ namespace Online_Store.Services
         Task<IEnumerable<Section>> GetAllAsync();
         Task<Section> GetOneAsync(Guid id);
         Task CreateAsync(Section section);
+        Task Delete(Guid id);
     }
 
     public class SectionService:ISectionService
@@ -37,6 +38,12 @@ namespace Online_Store.Services
         public async Task CreateAsync(Section section)
         {
             await _appDataContext.Sections.AddAsync(section);
+            await _appDataContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(Guid id)
+        {
+            _appDataContext.Sections.Remove(_appDataContext.Sections.FirstOrDefault(section => section.Id == id));
             await _appDataContext.SaveChangesAsync();
         }
     }

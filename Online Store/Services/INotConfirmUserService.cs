@@ -15,7 +15,7 @@ namespace Online_Store.Services
        Task<IEnumerable<NotConfirmUser>> GetAsync();
        Task<NotConfirmUser> GetAsync(Guid id);
         Task CreateAsync(NotConfirmUser notConfirmUser);
-        void Delete(Guid id);
+        Task Delete(Guid id);
         Task Update(NotConfirmUser notConfirmUser);
         bool Check(string name, string login);
     }
@@ -68,11 +68,10 @@ namespace Online_Store.Services
                await _appDataContext.SaveChangesAsync();
        }
 
-       public void Delete(Guid id)
+       public async Task Delete(Guid id)
        {
-           _appDataContext.NotConfirmUsers.Remove(
-               _appDataContext.NotConfirmUsers.FirstOrDefault(user => user.Id == id));
-           _appDataContext.SaveChanges();
+           _appDataContext.NotConfirmUsers.Remove(_appDataContext.NotConfirmUsers.FirstOrDefault(user => user.Id == id));
+          await _appDataContext.SaveChangesAsync();
        }
 
        public Task Update(NotConfirmUser notConfirmUser)

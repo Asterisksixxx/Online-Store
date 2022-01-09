@@ -25,7 +25,8 @@ namespace Online_Store.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubsectionCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,7 +92,8 @@ namespace Online_Store.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    SectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductCount = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,6 +107,29 @@ namespace Online_Store.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuthorUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture0 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture2 = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Users_AuthorUserId",
+                        column: x => x.AuthorUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -113,7 +138,13 @@ namespace Online_Store.Migrations
                     SubSectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Information = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PictureLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PictureGeneral = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Score = table.Column<double>(type: "float", nullable: false),
+                    ViewCount = table.Column<int>(type: "int", nullable: false),
+                    Picture0 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Picture3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,6 +168,11 @@ namespace Online_Store.Migrations
                 column: "SubSectionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reviews_AuthorUserId",
+                table: "Reviews",
+                column: "AuthorUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SubSections_SectionId",
                 table: "SubSections",
                 column: "SectionId");
@@ -156,16 +192,19 @@ namespace Online_Store.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "SubSections");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Sections");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

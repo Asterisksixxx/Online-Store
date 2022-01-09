@@ -10,7 +10,7 @@ using Online_Store.Data;
 namespace Online_Store.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20220106085011_Online-Store")]
+    [Migration("20220109125041_Online Store")]
     partial class OnlineStore
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,17 +85,66 @@ namespace Online_Store.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PictureLink")
+                    b.Property<string>("Picture0")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Picture1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Picture2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Picture3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PictureGeneral")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
 
                     b.Property<Guid>("SubSectionId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SubSectionId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AuthorUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Picture0")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Picture1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Picture2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorUserId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Online_Store.Models.Role", b =>
@@ -124,6 +173,9 @@ namespace Online_Store.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SubsectionCount")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Sections");
@@ -137,6 +189,9 @@ namespace Online_Store.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ProductCount")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("SectionId")
                         .HasColumnType("uniqueidentifier");
@@ -208,6 +263,15 @@ namespace Online_Store.Migrations
                         .IsRequired();
 
                     b.Navigation("SubSection");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.Review", b =>
+                {
+                    b.HasOne("Online_Store.Models.User", "AuthorUser")
+                        .WithMany()
+                        .HasForeignKey("AuthorUserId");
+
+                    b.Navigation("AuthorUser");
                 });
 
             modelBuilder.Entity("Online_Store.Models.SubSection", b =>

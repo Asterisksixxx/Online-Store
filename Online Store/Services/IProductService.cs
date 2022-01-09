@@ -10,10 +10,10 @@ namespace Online_Store.Services
 {
     public interface IProductService
     {
-      Task<IEnumerable<Product>>  GetAsync();
-       Task<Product> GetAsync(Guid id);
+      Task<IEnumerable<Product>>  GetAllAsync();
+       Task<Product> GetOneAsync(Guid id);
         Task CreateAsync(Product product);
-        void Delete(Guid id);
+        Task Delete(Guid id);
         Task Update(Product product);
     }
 
@@ -26,12 +26,12 @@ namespace Online_Store.Services
             _appDataContext = appDataContext;
         }
 
-        public async Task<IEnumerable<Product>>  GetAsync()
+        public async Task<IEnumerable<Product>>  GetAllAsync()
         {
             return await _appDataContext.Products.ToListAsync();
         }
 
-        public async Task<Product> GetAsync(Guid id)
+        public async Task<Product> GetOneAsync(Guid id)
         {
             return await _appDataContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             
@@ -43,10 +43,10 @@ namespace Online_Store.Services
           await _appDataContext.SaveChangesAsync();
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
             _appDataContext.Products.Remove(_appDataContext.Products.FirstOrDefault(product => product.Id == id));
-            _appDataContext.SaveChanges();
+           await _appDataContext.SaveChangesAsync();
         }
 
         public Task Update(Product product)

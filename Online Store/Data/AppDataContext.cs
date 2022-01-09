@@ -15,5 +15,6 @@ namespace Online_Store.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<NotConfirmUser> NotConfirmUsers { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Review> Reviews { get; set; }
     }
 }
