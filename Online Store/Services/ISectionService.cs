@@ -14,11 +14,13 @@ namespace Online_Store.Services
         Task<Section> GetOneAsync(Guid id);
         Task CreateAsync(Section section);
         Task Delete(Guid id);
+        Task UpdateAsync(Section section);
     }
 
     public class SectionService:ISectionService
     {
         private readonly AppDataContext _appDataContext;
+        
 
         public SectionService(AppDataContext appDataContext)
         {
@@ -27,6 +29,7 @@ namespace Online_Store.Services
 
         public async Task<IEnumerable<Section>> GetAllAsync()
         {
+
           return await _appDataContext.Sections.ToListAsync();
         }
 
@@ -39,11 +42,21 @@ namespace Online_Store.Services
         {
             await _appDataContext.Sections.AddAsync(section);
             await _appDataContext.SaveChangesAsync();
+           await UpdateAsync(section);
         }
 
         public async Task Delete(Guid id)
         {
             _appDataContext.Sections.Remove(_appDataContext.Sections.FirstOrDefault(section => section.Id == id));
+            await _appDataContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Section section)
+        {
+            var sections = _appDataContext.Sections.AsNoTracking().Include(section1 => section1.SubSections).ToList();
+            var mainSection = sections.FirstOrDefault(section1 => section1.Id == section.Id);
+            section.SubsectionCount = mainSection.SubSections.Count;
+            _appDataContext.Sections.Update(section);
             await _appDataContext.SaveChangesAsync();
         }
     }

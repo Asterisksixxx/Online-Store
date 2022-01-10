@@ -1,0 +1,14 @@
+﻿@model IEnumerable<SubSection>
+<div class="row">
+    <div class="col">SubSection name</div>
+    <div class="col">Section</div>
+    <div class="col"><a class="btn btn-danger" asp-controller="SubSection" asp-action="Create">Create new SubSection</a></div>
+</div>
+@foreach (var subsec in Model)
+{
+    <div class="row">
+        <div class="col">@subsec.Name</div>
+        <div class="col">@subsec.ProductCount</div>
+        <div class="col"><a class="btn btn-danger" asp-controller="SubSection" asp-route-id="@subsec.Id" asp-action="UpdateSubSection">Update</a></div>
+    </div>
+}

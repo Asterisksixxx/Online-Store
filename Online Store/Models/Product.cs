@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Online_Store.Models
 {
@@ -7,7 +8,7 @@ namespace Online_Store.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public SubSection SubSection { get; set; }
-        public Guid SubSectionId { get; set; }
+        public Guid? SubSectionId { get; set; }
         public decimal Cost { get; set; }
         public string Information { get; set; }
         public string PictureGeneral { get; set; }
@@ -17,5 +18,6 @@ namespace Online_Store.Models
         public string Picture1 { get; set; }
         public string Picture2 { get; set; }
         public string Picture3 { get; set; }
+        public List<Review> Reviews { get; set; }=new List<Review>();
     }
 }

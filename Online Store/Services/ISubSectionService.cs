@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
 using Online_Store.Models;
+using Online_Store.ViewModels;
 
 namespace Online_Store.Services
 {
@@ -15,6 +16,7 @@ namespace Online_Store.Services
         Task CreateAsync(SubSection subSection);
         Task Delete(Guid id);
         Task Update(SubSection subSection);
+        Task<DeleteSectionViewModel> GetAllFromSection(Section section);
     }
 
     public class SubSectionService : ISubSectionService
@@ -52,6 +54,18 @@ namespace Online_Store.Services
         {
             _appDataContext.SubSections.Update(subSection);
             await _appDataContext.SaveChangesAsync();
+        }
+
+        public async Task<DeleteSectionViewModel> GetAllFromSection(Section section)
+        {
+            var subSections =  _appDataContext.SubSections.
+                Include(subSection => subSection.Section);
+          
+            return new DeleteSectionViewModel
+            {
+                Section = section,
+                SubSections = await (subSections.Where(subSection => subSection.SectionId == section.Id)).ToListAsync()
+            };
         }
     }
 }

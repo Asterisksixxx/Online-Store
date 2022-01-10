@@ -8,7 +8,7 @@ namespace Online_Store.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int SubsectionCount { get; set; }
-        public List<SubSection> SubSections=new List<SubSection>();
+        public List<SubSection> SubSections { get; set; }=new List<SubSection>();
 
     }
 }

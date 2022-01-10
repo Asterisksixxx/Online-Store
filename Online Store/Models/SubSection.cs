@@ -8,8 +8,8 @@ namespace Online_Store.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Section Section { get; set; }
-        public Guid SectionId { get; set; }
-        public List<Product> Product =new List<Product>();
+        public Guid? SectionId { get; set; }
+        public List<Product> Product { get; set; } =new List<Product>();
         public uint ProductCount { get; set; }
     }
 }

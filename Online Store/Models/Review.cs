@@ -9,6 +9,8 @@ namespace Online_Store.Models
     {
         public Guid Id { get; set; }
         public User AuthorUser { get; set; }
+        public Product Product { get; set; }
+        public Guid? ProductId { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
         public string Picture0 { get; set; }

@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<Section>
-        <div class="row">
-    <div class="col">Section name</div>
-    <div class="col">Subsection count</div>
-    <div class="col"><a class="btn btn-danger" asp-controller="Section" asp-action="Create">Create new Section</a></div>
+        <div class="row pb-2">
+    <div class="col ">Section name</div>
+    <div class="col ">Subsection count</div>
+    <div class="col "><a class="btn btn-danger" asp-controller="Section" asp-action="Create">Create new Section</a></div>
 </div>
 @foreach (var sec in Model)
 {
-    <div class="row">
-        <div class="col">@sec.Name</div>
-        <div class="col">@sec.SubsectionCount</div>
-        <div class="col"><a class="btn btn-danger" asp-controller="Section" asp-action="AddSection">Add Subsection</a></div>
+    <div class="row pb-2">
+        <div class="col ">@sec.Name</div>
+        <div class="col ">@sec.SubsectionCount</div>
+        <div class="col "><a class="btn btn-info" asp-controller="Section" asp-route-id="@sec.Id" asp-action="UpdateSection">Update</a></div>
+        <div class="col "><a class="btn btn-info" asp-controller="Section" asp-route-id="@sec.Id" asp-action="DeleteSection">Delete</a></div>
     </div>
 }
 

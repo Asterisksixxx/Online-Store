@@ -101,7 +101,7 @@ namespace Online_Store.Migrations
                     b.Property<double>("Score")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("SubSectionId")
+                    b.Property<Guid?>("SubSectionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ViewCount")
@@ -132,6 +132,9 @@ namespace Online_Store.Migrations
                     b.Property<string>("Picture2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
@@ -141,6 +144,8 @@ namespace Online_Store.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorUserId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Reviews");
                 });
@@ -191,7 +196,7 @@ namespace Online_Store.Migrations
                     b.Property<long>("ProductCount")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("SectionId")
+                    b.Property<Guid?>("SectionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -255,10 +260,8 @@ namespace Online_Store.Migrations
             modelBuilder.Entity("Online_Store.Models.Product", b =>
                 {
                     b.HasOne("Online_Store.Models.SubSection", "SubSection")
-                        .WithMany()
-                        .HasForeignKey("SubSectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Product")
+                        .HasForeignKey("SubSectionId");
 
                     b.Navigation("SubSection");
                 });
@@ -266,19 +269,23 @@ namespace Online_Store.Migrations
             modelBuilder.Entity("Online_Store.Models.Review", b =>
                 {
                     b.HasOne("Online_Store.Models.User", "AuthorUser")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("AuthorUserId");
 
+                    b.HasOne("Online_Store.Models.Product", "Product")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProductId");
+
                     b.Navigation("AuthorUser");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Online_Store.Models.SubSection", b =>
                 {
                     b.HasOne("Online_Store.Models.Section", "Section")
-                        .WithMany()
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("SubSections")
+                        .HasForeignKey("SectionId");
 
                     b.Navigation("Section");
                 });
@@ -292,6 +299,26 @@ namespace Online_Store.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.Product", b =>
+                {
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.Section", b =>
+                {
+                    b.Navigation("SubSections");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.SubSection", b =>
+                {
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.User", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

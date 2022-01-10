@@ -19,5 +19,6 @@ namespace Online_Store.Models
         public string Number { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public List<Review> Reviews { get; set; }=new List<Review>();
     }
 }
