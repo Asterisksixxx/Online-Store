@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Product>
+<div class="row pb-2">
+    <div class="col ">Name</div>
+    <div class="col ">SubSection</div>
+    <div class="col ">Section</div>
+    <div class="col ">Picture</div>
+    <div class="col ">Cost</div>
+    <div class="col ">Information</div>
+    <div class="col ">Score</div>
+    <div class="col ">ViewCount</div>
+    <div class="col ">
+        <a class="btn btn-danger" asp-controller="Product" asp-action="Create">Create new</a>
+    </div>
+</div>
+@foreach (var sec in Model)
+{
+    <div class="row pb-2 border">
+        <div class="col ">@sec.Name</div>
+        <div class="col ">@sec.SubSection.Name</div>
+        <div class="col ">@sec.SubSection.Section.Name</div>
+        <div class="col "><img src="@sec.PictureGeneral" alt="Picture" height="50" width="50" /></div>
+        <div class="col ">@sec.Cost$</div>
+        <div class="col ">@sec.Information</div>
+        <div class="col ">@sec.Score</div>
+        <div class="col ">@sec.ViewCount</div>
+        <div class="col border ">
+            <a class="btn btn-info" asp-controller="Product" asp-route-id="@sec.Id" asp-action="UpdateProduct">Update</a>
+            <a class="btn btn-info" asp-controller="Product" asp-route-id="@sec.Id" asp-action="DeleteSubSection">Delete</a>
+        </div>
+    </div>
+}

@@ -1,14 +1,24 @@
 ﻿@model IEnumerable<SubSection>
-<div class="row">
-    <div class="col">SubSection name</div>
-    <div class="col">Section</div>
-    <div class="col"><a class="btn btn-danger" asp-controller="SubSection" asp-action="Create">Create new SubSection</a></div>
+<div class="row pb-2">
+    <div class="col ">SubSection name</div>
+    <div class="col ">Section Name</div>
+    <div class="col ">Product Count</div>
+    <div class="col ">
+        <a class="btn btn-danger" asp-controller="SubSection" asp-action="Create">Create new</a>
+        <form class="float-right" asp-controller="SubSection" asp-action="" method="post">
+            <input class="btn badge-primary" type="submit" value="Update Status"/>
+        </form>
+    </div>
 </div>
-@foreach (var subsec in Model)
+@foreach (var sec in Model)
 {
-    <div class="row">
-        <div class="col">@subsec.Name</div>
-        <div class="col">@subsec.ProductCount</div>
-        <div class="col"><a class="btn btn-danger" asp-controller="SubSection" asp-route-id="@subsec.Id" asp-action="UpdateSubSection">Update</a></div>
+    <div class="row pb-2">
+        <div class="col ">@sec.Name</div>
+        <div class="col ">@sec.Section.Name</div>
+        <div class="col ">@sec.ProductCount</div>
+        <div class="col ">
+            <a class="btn btn-info" asp-controller="SubSection" asp-route-id="@sec.Id" asp-action="UpdateSubSection">Update</a>
+            <a class="btn btn-info" asp-controller="SubSection" asp-route-id="@sec.Id" asp-action="DeleteSubSection">Delete</a>
+        </div>
     </div>
 }

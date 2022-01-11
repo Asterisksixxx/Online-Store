@@ -83,6 +83,9 @@ namespace Online_Store.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("Picture0")
                         .HasColumnType("nvarchar(max)");
 

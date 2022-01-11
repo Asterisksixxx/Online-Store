@@ -49,6 +49,12 @@ namespace Online_Store.Controllers
             return RedirectToAction("Index", "Section");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatusSection()
+        {
+            await _sectionService.UpdateStatus();
+            return RedirectToAction("Index", "Section");
+        }
         [HttpGet]
         public async Task<IActionResult> DeleteSection(Section section, Guid id)
         {
@@ -64,5 +70,6 @@ namespace Online_Store.Controllers
             _sectionService.Delete(id);
             return RedirectToAction("Index", "Section");
         }
+        
     }
 }

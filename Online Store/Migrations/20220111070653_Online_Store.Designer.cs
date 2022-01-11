@@ -10,8 +10,8 @@ using Online_Store.Data;
 namespace Online_Store.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20220110092118_Online_Stor")]
-    partial class Online_Stor
+    [Migration("20220111070653_Online_Store")]
+    partial class Online_Store
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,6 +84,9 @@ namespace Online_Store.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Picture0")
                         .HasColumnType("nvarchar(max)");

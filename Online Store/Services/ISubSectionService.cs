@@ -12,11 +12,13 @@ namespace Online_Store.Services
     public interface ISubSectionService
     {
        Task<IEnumerable<SubSection>> GetAllAsync();
+       Task<IEnumerable<SubSection>> GetAllAsyncForProduct();
         Task<SubSection> GetOneAsync(Guid id);
         Task CreateAsync(SubSection subSection);
         Task Delete(Guid id);
         Task Update(SubSection subSection);
         Task<DeleteSectionViewModel> GetAllFromSection(Section section);
+        Task UpdateStatus();
     }
 
     public class SubSectionService : ISubSectionService
@@ -30,12 +32,21 @@ namespace Online_Store.Services
 
         public async Task<IEnumerable<SubSection>> GetAllAsync()
         {
+            var listSubsections = _appDataContext.SubSections.AsNoTracking().
+                Include(section => section.Section);
+            listSubsections.Include(section => section.Product);
+            await listSubsections.ToListAsync();
+            return listSubsections;
+        }
+
+        public async Task<IEnumerable<SubSection>> GetAllAsyncForProduct()
+        {
             return await _appDataContext.SubSections.ToListAsync();
         }
 
         public async Task<SubSection> GetOneAsync(Guid id)
-        {
-          return await _appDataContext.SubSections.FirstOrDefaultAsync(section => section.Id == id);
+        { var subSections=_appDataContext.SubSections.Include(section =>section.Section);
+          return await subSections.FirstOrDefaultAsync(section => section.Id == id);
         }
 
         public async Task CreateAsync(SubSection subSection)
@@ -52,6 +63,10 @@ namespace Online_Store.Services
 
         public async Task Update(SubSection subSection)
         {
+            var sections = _appDataContext.SubSections.AsNoTracking().Include(section1 => section1.Product).ToList();
+            var mainSection = sections.FirstOrDefault(section1 => section1.Id == subSection.Id);
+            if (mainSection != null) mainSection.ProductCount =Convert.ToUInt32(mainSection.Product.Count);
+            if (mainSection != null) subSection.ProductCount = mainSection.ProductCount;
             _appDataContext.SubSections.Update(subSection);
             await _appDataContext.SaveChangesAsync();
         }
@@ -66,6 +81,14 @@ namespace Online_Store.Services
                 Section = section,
                 SubSections = await (subSections.Where(subSection => subSection.SectionId == section.Id)).ToListAsync()
             };
+        }
+        public async Task UpdateStatus()
+        {
+            var sec = await _appDataContext.SubSections.ToListAsync();
+            foreach (var section in sec)
+            {
+                await Update(section);
+            }
         }
     }
 }

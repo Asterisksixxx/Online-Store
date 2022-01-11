@@ -15,6 +15,7 @@ namespace Online_Store.Services
         Task CreateAsync(Section section);
         Task Delete(Guid id);
         Task UpdateAsync(Section section);
+        Task UpdateStatus();
     }
 
     public class SectionService:ISectionService
@@ -47,6 +48,7 @@ namespace Online_Store.Services
 
         public async Task Delete(Guid id)
         {
+           
             _appDataContext.Sections.Remove(_appDataContext.Sections.FirstOrDefault(section => section.Id == id));
             await _appDataContext.SaveChangesAsync();
         }
@@ -58,6 +60,15 @@ namespace Online_Store.Services
             section.SubsectionCount = mainSection.SubSections.Count;
             _appDataContext.Sections.Update(section);
             await _appDataContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateStatus()
+        {
+            var sec =await _appDataContext.Sections.ToListAsync();
+            foreach (var section in sec)
+            {
+               await UpdateAsync(section);
+            }
         }
     }
 }
