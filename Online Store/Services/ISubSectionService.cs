@@ -57,7 +57,9 @@ namespace Online_Store.Services
 
         public async Task Delete(Guid id)
         {
-            _appDataContext.SubSections.Remove(_appDataContext.SubSections.FirstOrDefault(section => section.Id == id));
+          var listSubsect= _appDataContext.SubSections.Include(section => section.Product);
+          var sub = await listSubsect.FirstOrDefaultAsync(section => section.Id == id);
+          _appDataContext.SubSections.Remove(sub);
            await _appDataContext.SaveChangesAsync();
         }
 

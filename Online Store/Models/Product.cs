@@ -9,7 +9,7 @@ namespace Online_Store.Models
         public string Name { get; set; }
         public SubSection SubSection { get; set; }
         public Guid? SubSectionId { get; set; }
-        public decimal Cost { get; set; }
+        public double Cost { get; set; }
         public string Information { get; set; }
         public string PictureGeneral { get; set; }
         public double Score { get; set; }

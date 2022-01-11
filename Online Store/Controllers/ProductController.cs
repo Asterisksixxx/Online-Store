@@ -43,7 +43,29 @@ namespace Online_Store.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(Guid id)
         {
+            var subSec = await _subSectionService.GetAllAsyncForProduct();
+            ViewBag.Subsection = new SelectList(subSec, "Id", "Name");
             return View(await _productService.GetOneAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProduct(Product product)
+        {
+            await _productService.Update(product);
+          return RedirectToAction("Index", "Product");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return View(await _productService.GetOneAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteProduct(Guid id)
+        {
+            await _productService.Delete(id);
+            return RedirectToAction("Index", "Product");
         }
     }
 }

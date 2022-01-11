@@ -10,7 +10,7 @@ namespace Online_Store.Services
         {
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("User FeedBack ", "heroes51635@mail.ru"));
+            emailMessage.From.Add(new MailboxAddress("Online_Store Computer Components", "heroes51635@mail.ru"));
             emailMessage.To.Add(new MailboxAddress("heroes51635@mail.ru", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)

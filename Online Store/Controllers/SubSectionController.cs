@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -65,6 +64,13 @@ namespace Online_Store.Controllers
         public async Task<IActionResult> UpdateSubSection(SubSection subSection)
         {
             await _subSectionService.Update(subSection);
+            return RedirectToAction("Index", "SubSection");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAllSubSection()
+        {
+            await _subSectionService.UpdateStatus();
             return RedirectToAction("Index", "SubSection");
         }
     }
