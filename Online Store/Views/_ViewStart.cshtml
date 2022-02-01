@@ -1,16 +1,16 @@
 ﻿@using System.Security.Claims
 @{
-    if (Context.User.FindFirst("Role") != null)
+    if (Context.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType) != null)
     {
-        switch (Context.User.FindFirstValue("Role"))
+        switch (Context.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType))
         {
-            case "0":
+            case "GUEST":
                 Layout = "NotConfirmUserLayout";
                 break;
-            case "1":
+            case "USER":
                 Layout = "_Layout";
                 break;
-            case "2":
+            case "ADMIN":
                 Layout = "AdminLayout";
                 break;
         }

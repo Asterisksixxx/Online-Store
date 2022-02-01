@@ -16,7 +16,7 @@ namespace Online_Store.Services
        Task<IEnumerable<User>> GetAsync();
        Task<User> GetOne(string login, string password);
        Task CreateAsync(NotConfirmUser notConfirmUser);
-       ClaimsIdentity Authenticate(User user);
+       Task<ClaimsIdentity> Authenticate(User user);
        Task<User> GetAsyncOne(string login);
        Task Update(EditUserViewModel editUser);
    }
@@ -53,7 +53,7 @@ namespace Online_Store.Services
                Name = notConfirmUser.Name,
                Email = notConfirmUser.Email,
                Password = notConfirmUser.Password,
-               Role =  _appDataContext.Roles.FirstOrDefault(role =>role.RoleIndex==1),
+               Role =  _appDataContext.Roles.FirstOrDefault(role =>role.Name == "USER"),
                Surname = notConfirmUser.Surname,
                DataBorn = notConfirmUser.DataBorn,
                Number = notConfirmUser.Number,
@@ -63,7 +63,7 @@ namespace Online_Store.Services
              await _appDataContext.SaveChangesAsync();
        }
 
-       public Task Update(EditUserViewModel editUser)
+       public async Task Update(EditUserViewModel editUser)
        {
            var user = _appDataContext.Users.FirstOrDefault(user1 => user1.Id == editUser.Id);
            user.Email =editUser.Email;
@@ -73,17 +73,17 @@ namespace Online_Store.Services
             user.Number = editUser.Number;
            user.Year = DateTime.Now.Year - user.DataBorn.Year;
           _appDataContext.Users.Update(user);
-          Authenticate(user);
-          return _appDataContext.SaveChangesAsync();
+         await Authenticate(user);
+          await _appDataContext.SaveChangesAsync();
        }
-       public ClaimsIdentity Authenticate(User user)
+       public async Task<ClaimsIdentity> Authenticate(User user)
        {
+           user.Role = await _appDataContext.Roles.FirstOrDefaultAsync(role =>role.Id==user.RoleId);
            // создаем один claim
            var claims = new List<Claim>
            {
-               new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-               new Claim(ClaimsIdentity.DefaultRoleClaimType,user.Login),
-               new Claim("Role",_appDataContext.Roles.FirstOrDefault(r=>r.Id==user.RoleId)?.RoleIndex.ToString())
+               new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+               new Claim(ClaimsIdentity.DefaultRoleClaimType,user.Role.Name),
            };
            // создаем объект ClaimsIdentity
            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,

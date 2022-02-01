@@ -19,6 +19,22 @@ namespace Online_Store.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Online_Store.Models.Basket", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Baskets");
+                });
+
             modelBuilder.Entity("Online_Store.Models.NotConfirmUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -68,14 +84,42 @@ namespace Online_Store.Migrations
                     b.ToTable("NotConfirmUsers");
                 });
 
+            modelBuilder.Entity("Online_Store.Models.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateAndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductsCount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalCost")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("Online_Store.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<Guid?>("BasketId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
 
                     b.Property<string>("Information")
                         .HasColumnType("nvarchar(max)");
@@ -85,6 +129,9 @@ namespace Online_Store.Migrations
 
                     b.Property<int>("OrderCount")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Picture0")
                         .HasColumnType("nvarchar(max)");
@@ -111,6 +158,10 @@ namespace Online_Store.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BasketId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("SubSectionId");
 
@@ -159,15 +210,30 @@ namespace Online_Store.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RoleIndex")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoleName")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9dc6e38b-1687-4e74-a4c7-d2acbecfe6fc"),
+                            Name = "USER"
+                        },
+                        new
+                        {
+                            Id = new Guid("b4e0ca41-0f9b-4a08-b42b-8024b4ce46c7"),
+                            Name = "GUEST"
+                        },
+                        new
+                        {
+                            Id = new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"),
+                            Name = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Online_Store.Models.Section", b =>
@@ -247,6 +313,32 @@ namespace Online_Store.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
+                            DataBorn = new DateTime(2022, 1, 29, 13, 4, 40, 717, DateTimeKind.Local).AddTicks(1906),
+                            Email = "admin@admin.by",
+                            Login = "admin",
+                            Name = "admin",
+                            Number = "+37500000000",
+                            Password = "admin",
+                            RoleId = new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"),
+                            Surname = "admin",
+                            Year = 0
+                        });
+                });
+
+            modelBuilder.Entity("Online_Store.Models.Basket", b =>
+                {
+                    b.HasOne("Online_Store.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Online_Store.Models.NotConfirmUser", b =>
@@ -260,8 +352,27 @@ namespace Online_Store.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Online_Store.Models.Order", b =>
+                {
+                    b.HasOne("Online_Store.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Online_Store.Models.Product", b =>
                 {
+                    b.HasOne("Online_Store.Models.Basket", null)
+                        .WithMany("ListProducts")
+                        .HasForeignKey("BasketId");
+
+                    b.HasOne("Online_Store.Models.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("Online_Store.Models.SubSection", "SubSection")
                         .WithMany("Product")
                         .HasForeignKey("SubSectionId");
@@ -302,6 +413,16 @@ namespace Online_Store.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.Basket", b =>
+                {
+                    b.Navigation("ListProducts");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.Order", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Online_Store.Models.Product", b =>

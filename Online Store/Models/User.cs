@@ -14,8 +14,8 @@ namespace Online_Store.Models
         public string Login { get; set; }
         public DateTime DataBorn { get; set; }
         public int Year { get; set; }
-        public Guid RoleId { get; set; }
         public Role Role { get; set; }
+        public Guid RoleId { get; set; }
         public string Number { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }

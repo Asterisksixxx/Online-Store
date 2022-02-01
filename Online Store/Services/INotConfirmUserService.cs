@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
 using Online_Store.Models;
-using Online_Store.Services;
 
 namespace Online_Store.Services
 {
@@ -23,10 +21,12 @@ namespace Online_Store.Services
    public class NotConfirmUserService : INotConfirmUserService
    {
        private readonly AppDataContext _appDataContext;
+       private readonly IEmailService _emailService;
 
-       public NotConfirmUserService(AppDataContext appDataContext)
+       public NotConfirmUserService(AppDataContext appDataContext, IEmailService emailService)
        {
            _appDataContext = appDataContext;
+           _emailService = emailService;
        }
 
        public async Task<IEnumerable<NotConfirmUser>> GetAsync()
@@ -48,22 +48,23 @@ namespace Online_Store.Services
         public async Task CreateAsync(NotConfirmUser notConfirmUser)
        {
 
-           notConfirmUser.Role = _appDataContext.Roles.FirstOrDefault(role => role.RoleIndex == 0);
-          
-               Random rdnumber = new Random();
-               Random rdbukver = new Random();
-               Random rdchange = new Random();
-               string Code = "";
-               while (Code.Length < 10)
-               {
-                   int rdch = rdchange.Next(0, 2);
-                   if (rdch == 1) { Code += Convert.ToChar(rdbukver.Next(41, 67)); }
-                   else { Code += rdnumber.Next(0,10).ToString(); }
-               }
-               string message=
-               notConfirmUser.Code = Code;
-               EmailService mailService = new EmailService();
-               await mailService.SendEmailAsync(notConfirmUser.Email, "Confirm Account and Email", notConfirmUser.Code);
+           notConfirmUser.Role = _appDataContext.Roles.FirstOrDefault(role => role.Name == "GUEST");
+
+            Random rd = new Random();
+            var scoreNumber = "";
+            var scoreNumber2 = "";
+            var scoreChar = "";
+            for (int i = 0; i < 5; i++)
+            {
+                scoreNumber += rd.Next(0, 9);
+                scoreNumber2 += rd.Next(0, 9);
+                scoreChar += Convert.ToChar(rd.Next(65, 90));
+            }
+            string message = scoreChar + "-" + scoreChar + "-" + scoreNumber2;
+               notConfirmUser.Code =message ;
+               IEmailService mailService = new EmailService();
+               await mailService.SendEmailAsync(notConfirmUser.Email
+                   , "Confirm Account and Email", notConfirmUser.Code);
                await _appDataContext.AddAsync(notConfirmUser);
                await _appDataContext.SaveChangesAsync();
        }

@@ -55,8 +55,8 @@ namespace Online_Store.Controllers
             }
             else
             {
-                EmailService mailService = new EmailService();
-                await mailService.SendEmailAsync(notConfirmUser.Email.ToString(), "Confirm Account and Email",
+                IEmailService mailService = new EmailService();
+                await mailService.SendEmailAsync(notConfirmUser.Email, "Confirm Account and Email",
                     notConfirmUser.Code);
                 return RedirectToAction("Confirm");
             }

@@ -21,10 +21,9 @@ namespace Online_Store.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(string login)
         {
-            var user = await _userService.GetAsyncOne(
-                this.HttpContext.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType));
+            var user = await _userService.GetAsyncOne(login);
             EditUserViewModel userEdit = new EditUserViewModel
             {
                 Email = user.Email,
@@ -64,9 +63,9 @@ namespace Online_Store.Controllers
         public async Task Authenticate(User user)
         {
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(_userService.Authenticate(user)));
+                new ClaimsPrincipal(await _userService.Authenticate(user)));
         }
-        public async Task<IActionResult> Logout(User user)
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "User");

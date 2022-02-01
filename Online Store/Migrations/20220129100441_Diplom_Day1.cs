@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Online_Store.Migrations
 {
-    public partial class Online_Store : Migration
+    public partial class Diplom_Day1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,7 @@ namespace Online_Store.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoleIndex = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,13 +106,52 @@ namespace Online_Store.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Baskets",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Baskets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductsCount = table.Column<int>(type: "int", nullable: false),
+                    DateAndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalCost = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubSectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Cost = table.Column<double>(type: "float", nullable: false),
                     Information = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PictureGeneral = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Score = table.Column<double>(type: "float", nullable: false),
@@ -122,11 +160,25 @@ namespace Online_Store.Migrations
                     Picture0 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Picture1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Picture2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Picture3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Picture3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BasketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Baskets_BasketId",
+                        column: x => x.BasketId,
+                        principalTable: "Baskets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Products_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Products_SubSections_SubSectionId",
                         column: x => x.SubSectionId,
@@ -165,10 +217,50 @@ namespace Online_Store.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("9dc6e38b-1687-4e74-a4c7-d2acbecfe6fc"), "USER" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("b4e0ca41-0f9b-4a08-b42b-8024b4ce46c7"), "GUEST" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"), "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "DataBorn", "Email", "Login", "Name", "Number", "Password", "RoleId", "Surname", "Year" },
+                values: new object[] { new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"), new DateTime(2022, 1, 29, 13, 4, 40, 717, DateTimeKind.Local).AddTicks(1906), "admin@admin.by", "admin", "admin", "+37500000000", "admin", new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"), "admin", 0 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Baskets_UserId",
+                table: "Baskets",
+                column: "UserId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_NotConfirmUsers_RoleId",
                 table: "NotConfirmUsers",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_BasketId",
+                table: "Products",
+                column: "BasketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_OrderId",
+                table: "Products",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SubSectionId",
@@ -208,16 +300,22 @@ namespace Online_Store.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Baskets");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "SubSections");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Sections");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

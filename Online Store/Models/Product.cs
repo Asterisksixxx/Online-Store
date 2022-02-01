@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Online_Store.Models
 {
@@ -10,6 +11,8 @@ namespace Online_Store.Models
         public SubSection SubSection { get; set; }
         public Guid? SubSectionId { get; set; }
         public double Cost { get; set; }
+        [Range(0,99999,ErrorMessage = "Ошибка в количестве товара")]
+        public int Count { get; set; }
         public string Information { get; set; }
         public string PictureGeneral { get; set; }
         public double Score { get; set; }
