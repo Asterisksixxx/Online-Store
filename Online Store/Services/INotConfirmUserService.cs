@@ -60,7 +60,7 @@ namespace Online_Store.Services
                 scoreNumber2 += rd.Next(0, 9);
                 scoreChar += Convert.ToChar(rd.Next(65, 90));
             }
-            string message = scoreChar + "-" + scoreChar + "-" + scoreNumber2;
+            string message = scoreNumber + "-" + scoreChar + "-" + scoreNumber2;
                notConfirmUser.Code =message ;
                IEmailService mailService = new EmailService();
                await mailService.SendEmailAsync(notConfirmUser.Email
@@ -70,7 +70,7 @@ namespace Online_Store.Services
        }
 
        public async Task Delete(Guid id)
-       {
+       { 
            _appDataContext.NotConfirmUsers.Remove(_appDataContext.NotConfirmUsers.FirstOrDefault(user => user.Id == id));
           await _appDataContext.SaveChangesAsync();
        }

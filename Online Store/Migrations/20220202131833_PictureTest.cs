@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Online_Store.Migrations
 {
-    public partial class Diplom_Day1 : Migration
+    public partial class PictureTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,7 +72,8 @@ namespace Online_Store.Migrations
                     RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductScore = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,15 +153,12 @@ namespace Online_Store.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubSectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Cost = table.Column<double>(type: "float", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false),
                     Information = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PictureGeneral = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PictureGeneral = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Score = table.Column<double>(type: "float", nullable: false),
                     ViewCount = table.Column<int>(type: "int", nullable: false),
                     OrderCount = table.Column<int>(type: "int", nullable: false),
-                    Picture0 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Picture1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Picture2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Picture3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BasketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -234,8 +232,8 @@ namespace Online_Store.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "DataBorn", "Email", "Login", "Name", "Number", "Password", "RoleId", "Surname", "Year" },
-                values: new object[] { new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"), new DateTime(2022, 1, 29, 13, 4, 40, 717, DateTimeKind.Local).AddTicks(1906), "admin@admin.by", "admin", "admin", "+37500000000", "admin", new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"), "admin", 0 });
+                columns: new[] { "Id", "DataBorn", "Email", "Login", "Name", "Number", "Password", "ProductScore", "RoleId", "Surname", "Year" },
+                values: new object[] { new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"), new DateTime(2022, 2, 2, 16, 18, 33, 151, DateTimeKind.Local).AddTicks(8424), "admin@admin.by", "admin", "admin", "+37500000000", "admin", 0, new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"), "admin", 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Baskets_UserId",

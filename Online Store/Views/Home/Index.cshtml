@@ -1,7 +1,20 @@
-﻿@model Online_Store.ViewModels.IndexViewModel
+﻿
+@model Online_Store.ViewModels.IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
-<div class="row">
 
-</div>
+@foreach(var prod in Model.Product)
+{
+    <div class="card" style="width: 18rem;">
+        <img src="@("/image/"+prod.PictureGeneral)" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@prod.Name</h5>
+            <h6 class="card-title">@prod.SubSection.Name</h6>
+            <p class="card-text">@prod.Information</p>
+            <a asp-controller="Product" asp-action="Details" class="btn btn-primary"></a>
+        </div>
+    </div>
+}
+
+

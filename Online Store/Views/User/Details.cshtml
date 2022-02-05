@@ -3,25 +3,25 @@
     <h2 class="pr-2">@Model.Name</h2>
     <h2>@Model.Surname</h2>
 </div>
-<form asp-controller="User" asp-action="Details" method="post">
-    <div class="row">
-        <div class="pr-2">
-            <div class="pb-2">Name</div>
-            <div class="pb-2">Surname</div>
-            <div class="pb-2">Email</div>
-            <div class="pb-2">Data Born</div>
-            <div class="pb-2">Edit Data Born</div>
-            <div class="pb-2">Phone Number</div>
-        </div>
-        <div class="d-flex flex-column">
-            <label asp-for="Name">@Model.Name</label>
-            <label asp-for="Surname">@Model.Surname</label>
-            <label asp-for="Email">@Model.Email</label>
-            <label asp-for="DataBorn">@Model.DataBorn</label>
-            <label asp-for="Number">@Model.Number</label>
-            <input type="hidden" asp-for="Id" value="@Model.Id"/>
-            <input type="submit" class="btn btn-danger" value="Edit"/>
-            <button asp-controller="Home" asp-action="Index">Back to Home</button>
-        </div>
+<div class="row">
+    <div class="pr-2">
+        <div class="p-3">Name</div>
+        <div class="pb-2 ">Surname</div>
+        <div class="pb-2 ">Email</div>
+        <div class="pb-2 ">Data Born</div>
+        <div class="pb-2 ">Edit Data Born</div>
+        <div class="pb-2 ">Phone Number</div>
     </div>
-</form>
+    <div class="d-flex flex-column">
+        <label>@Model.Name</label>
+        <label>@Model.Surname</label>
+        <label>@Model.Email</label>
+        <label>@Model.DataBorn.ToShortDateString()</label>
+        <label>@Model.Number</label>
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>
+    </div>
+</div>
+<div>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+

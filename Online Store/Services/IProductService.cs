@@ -28,11 +28,9 @@ namespace Online_Store.Services
 
         public async Task<IEnumerable<Product>>  GetAllAsync()
         {
-            var listSubsections = _appDataContext.Products.AsNoTracking().
-                Include(product =>product.SubSection).
-                ThenInclude(section =>section.Section );
-            await listSubsections.ToListAsync();
-            return listSubsections;
+            var listProduct = _appDataContext.Products
+                .Include(p => p.SubSection).ThenInclude(s => s.Section);
+            return await listProduct.ToListAsync();
         }
 
         public async Task<Product> GetOneAsync(Guid id)
@@ -42,7 +40,8 @@ namespace Online_Store.Services
         }
 
         public async Task CreateAsync(Product product)
-        {   product.PictureGeneral= "C:\\Users\\heroe\\OneDrive\\Изображения\\Снимки экрана\\" + product.PictureGeneral;
+        {   
+
             await _appDataContext.Products.AddAsync(product);
           await _appDataContext.SaveChangesAsync();
         }

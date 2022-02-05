@@ -10,8 +10,8 @@ using Online_Store.Data;
 namespace Online_Store.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20220129100441_Diplom_Day1")]
-    partial class Diplom_Day1
+    [Migration("20220202131833_PictureTest")]
+    partial class PictureTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -123,6 +123,9 @@ namespace Online_Store.Migrations
                     b.Property<double>("Cost")
                         .HasColumnType("float");
 
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
                     b.Property<string>("Information")
                         .HasColumnType("nvarchar(max)");
 
@@ -135,20 +138,8 @@ namespace Online_Store.Migrations
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Picture0")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Picture1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Picture2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Picture3")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PictureGeneral")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<double>("Score")
                         .HasColumnType("float");
@@ -301,6 +292,9 @@ namespace Online_Store.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProductScore")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
@@ -320,12 +314,13 @@ namespace Online_Store.Migrations
                         new
                         {
                             Id = new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
-                            DataBorn = new DateTime(2022, 1, 29, 13, 4, 40, 717, DateTimeKind.Local).AddTicks(1906),
+                            DataBorn = new DateTime(2022, 2, 2, 16, 18, 33, 151, DateTimeKind.Local).AddTicks(8424),
                             Email = "admin@admin.by",
                             Login = "admin",
                             Name = "admin",
                             Number = "+37500000000",
                             Password = "admin",
+                            ProductScore = 0,
                             RoleId = new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"),
                             Surname = "admin",
                             Year = 0

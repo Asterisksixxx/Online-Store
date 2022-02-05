@@ -30,13 +30,9 @@ namespace Online_Store.Services
         public async Task<IndexViewModel> GetAllData()
         {
             var products = (await _productService.GetAllAsync()).ToList();
-            var subsections = (await _subSectionService.GetAllAsync()).ToList();
-            var sections = (await _sectionService.GetAllAsync()).ToList();
             return new IndexViewModel
             {
                 Product =products,
-                Section = sections,
-                SubSections = subsections
             };
         }
     }
