@@ -3,18 +3,18 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-@foreach(var prod in Model.Product)
-{
-    <div class="card" style="width: 18rem;">
-        <img src="@("/image/"+prod.PictureGeneral)" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">@prod.Name</h5>
-            <h6 class="card-title">@prod.SubSection.Name</h6>
-            <p class="card-text">@prod.Information</p>
-            <a asp-controller="Product" asp-action="Details" class="btn btn-primary"></a>
+<section class="d-flex justify-content-around flex-wrap">
+    @foreach(var prod in Model.Product)
+    {
+        <div class="card" style="width: 18rem;">
+            <img width="60" height="150" src="@("/image/"+prod.PictureGeneral)" class="card-img-top" alt="...">
+            
+            <div class="card-body">
+                <h5 class="card-title">@prod.Name</h5>
+                @if(prod.SubSection!=null){  <h6 class="card-title">@prod.SubSection.Name</h6>}
+                <p class="card-text">@prod.Information</p>
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@prod.Id" class="btn btn-primary">Подробнее...</a>
+            </div>
         </div>
-    </div>
-}
-
-
+    }
+</section>

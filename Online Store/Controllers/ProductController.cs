@@ -40,16 +40,7 @@ namespace Online_Store.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
-            var pathString = _hostEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(product.PictureGeneralFile.FileName);
-            string extension = Path.GetExtension(product.PictureGeneralFile.FileName);
-            product.PictureGeneral = fileName + extension;
-            product.PictureGeneral = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            string path = Path.Combine(pathString + "/image/", fileName);
-            await using (FileStream fs =new FileStream(path,FileMode.Create))
-            {
-                await product.PictureGeneralFile.CopyToAsync(fs);
-            }
+            await _productService.SavePicture(product);
             await _productService.CreateAsync(product);
            return RedirectToAction("Index", "Product");
         }
@@ -82,5 +73,10 @@ namespace Online_Store.Controllers
             return RedirectToAction("Index", "Product");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            return View(await _productService.GetOneAsync(id));
+        }
     }
 }

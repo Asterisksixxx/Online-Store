@@ -21,9 +21,21 @@ namespace Online_Store.Models
         [Column(TypeName = "nvarchar(100)")]
         [DisplayName("Image Name")]
         public string PictureGeneral { get; set; }
+        [Column(TypeName = "nvarchar(100)")]
+        [DisplayName("Image Name1")]
+        public string PictureSecond { get; set; }
+        [Column(TypeName = "nvarchar(100)")]
+        [DisplayName("Image Name2")]
+        public string PictureSubSecond { get; set; }
         [NotMapped]
-        [DisplayName("Upload picture")]
+        [DisplayName("Главное изображение")]
         public IFormFile PictureGeneralFile { get; set; }
+        [NotMapped]
+        [DisplayName("Изображение")]
+        public IFormFile PictureSecondFile { get; set; }
+        [NotMapped]
+        [DisplayName("Изображение1")]
+        public IFormFile PictureSubSecondFile { get; set; }
         public double Score { get; set; }
         public int ViewCount { get; set; }
         public int OrderCount { get; set; }

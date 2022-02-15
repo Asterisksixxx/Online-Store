@@ -139,6 +139,12 @@ namespace Online_Store.Migrations
                     b.Property<string>("PictureGeneral")
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("PictureSecond")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PictureSubSecond")
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<double>("Score")
                         .HasColumnType("float");
 
@@ -312,7 +318,7 @@ namespace Online_Store.Migrations
                         new
                         {
                             Id = new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
-                            DataBorn = new DateTime(2022, 2, 2, 16, 18, 33, 151, DateTimeKind.Local).AddTicks(8424),
+                            DataBorn = new DateTime(2022, 2, 15, 14, 21, 40, 964, DateTimeKind.Local).AddTicks(4926),
                             Email = "admin@admin.by",
                             Login = "admin",
                             Name = "admin",

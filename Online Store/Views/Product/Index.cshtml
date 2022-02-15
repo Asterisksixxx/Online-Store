@@ -34,13 +34,13 @@
             <div class="col"></div>
         }
     </div>
-    <div class="col "><img src=" @("~/image/"+sec.PictureGeneral)" alt="Picture"  asp-append-version="true"/></div>
+    <div class="col "><img src=" @("~/image/"+sec.PictureGeneral)" alt="Picture" height="50" width="50" asp-append-version="true"/></div>
     <div class="col ">@sec.Cost$</div>
     <div class="col ">@sec.Information</div>
     <div class="col ">@sec.Score</div>
     <div class="col ">@sec.ViewCount</div>
-    <div class="col border ">
-        <a class="btn btn-info" asp-controller="Product" asp-route-id="@sec.Id" asp-action="UpdateProduct">Update</a>
+    <div class="col ">
+        <a class="btn btn-info" asp-controller="Product"  asp-route-id="@sec.Id" asp-action="UpdateProduct">Update</a>
         <a class="btn btn-info" asp-controller="Product" asp-route-id="@sec.Id" asp-action="Delete">Delete</a>
     </div>
 </div>
