@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Online_Store.Models;
 using Online_Store.Services;
+using Online_Store.ViewModels;
 
 namespace Online_Store.Controllers
 {
@@ -38,8 +39,22 @@ namespace Online_Store.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(CreateProductViewModel cpvm)
         {
+            cpvm.Cost= cpvm.Cost.Replace(".", ",");
+            var cost = Convert.ToDecimal(cpvm.Cost);
+            Product product = new Product
+            {
+                Name = cpvm.Name,
+                Information = cpvm.Information,
+                Cost = cost,
+                Count = cpvm.Count,
+                PictureGeneralFile = cpvm.PictureGeneralFile,
+                PictureSecondFile = cpvm.PictureSecondFile,
+                PictureSubSecondFile = cpvm.PictureSubSecondFile,
+                SubSectionId = cpvm.SubSectionId,
+                SubSection = cpvm.SubSection
+            };
             await _productService.SavePicture(product);
             await _productService.CreateAsync(product);
            return RedirectToAction("Index", "Product");

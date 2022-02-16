@@ -118,8 +118,8 @@ namespace Online_Store.Migrations
                     b.Property<Guid?>("BasketId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Cost")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
@@ -318,7 +318,7 @@ namespace Online_Store.Migrations
                         new
                         {
                             Id = new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
-                            DataBorn = new DateTime(2022, 2, 15, 14, 21, 40, 964, DateTimeKind.Local).AddTicks(4926),
+                            DataBorn = new DateTime(2022, 2, 16, 23, 12, 17, 906, DateTimeKind.Local).AddTicks(8698),
                             Email = "admin@admin.by",
                             Login = "admin",
                             Name = "admin",

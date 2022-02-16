@@ -5,7 +5,6 @@
     <div class="col ">Section</div>
     <div class="col ">Picture</div>
     <div class="col ">Cost</div>
-    <div class="col ">Information</div>
     <div class="col ">Score</div>
     <div class="col ">ViewCount</div>
     <div class="col ">
@@ -18,7 +17,7 @@
     <div class="col ">@sec.Name</div>
     @if (sec.SubSection != null)
     {
-        <div class="col">@sec.SubSection.Name.ToString()</div>
+        <div class="col">@sec.SubSection.Name</div>
     }
     else
     {
@@ -36,7 +35,6 @@
     </div>
     <div class="col "><img src=" @("~/image/"+sec.PictureGeneral)" alt="Picture" height="50" width="50" asp-append-version="true"/></div>
     <div class="col ">@sec.Cost$</div>
-    <div class="col ">@sec.Information</div>
     <div class="col ">@sec.Score</div>
     <div class="col ">@sec.ViewCount</div>
     <div class="col ">

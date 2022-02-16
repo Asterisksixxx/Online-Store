@@ -80,7 +80,7 @@ namespace Online_Store.Services
                 string fileName1 = Path.GetFileNameWithoutExtension(product.PictureSecondFile.FileName);
                 string extension1 = Path.GetExtension(product.PictureSecondFile.FileName);
                 product.PictureSecond = fileName1 + extension1;
-                string path1 = Path.Combine(pathString + "/image/", fileName + extension);
+                string path1 = Path.Combine(pathString1 + "/image/", fileName1 + extension1);
                 await using (FileStream fs = new FileStream(path1, FileMode.Create))
                 {
                     await product.PictureSecondFile.CopyToAsync(fs);
@@ -88,8 +88,8 @@ namespace Online_Store.Services
                 var pathString2 = _hostEnvironment.WebRootPath;
                 string fileName2 = Path.GetFileNameWithoutExtension(product.PictureSubSecondFile.FileName);
                 string extension2 = Path.GetExtension(product.PictureSubSecondFile.FileName);
-                product.PictureSubSecond = fileName1 + extension1;
-                string path2 = Path.Combine(pathString + "/image/", fileName + extension);
+                product.PictureSubSecond = fileName2 + extension2;
+                string path2 = Path.Combine(pathString2 + "/image/", fileName2 + extension2);
                 await using (FileStream fs = new FileStream(path2, FileMode.Create))
                 {
                     await product.PictureSubSecondFile.CopyToAsync(fs);

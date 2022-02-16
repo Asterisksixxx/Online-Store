@@ -1,4 +1,4 @@
-﻿@model Online_Store.Models.Product
+﻿@model Online_Store.ViewModels.CreateProductViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,13 +13,13 @@
         <form asp-controller="Product" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="SubSectionId" class="control-label"></label>
+                <select asp-for="SubSectionId" class ="form-control" asp-items="ViewBag.Subsection"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubSectionId" class="control-label"></label>
-                <select asp-for="SubSectionId" class ="form-control" asp-items="ViewBag.Subsection"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Information" class="control-label"></label>
-                <input asp-for="Information" class="form-control" />
+              <textarea class="form-control" asp-for="Information"></textarea>
                 <span asp-validation-for="Information" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,6 +45,11 @@
                 <label asp-for="PictureSubSecondFile" class="control-label"></label>
                 <input asp-for="PictureSubSecondFile" accept="image/*" />
                 <span asp-validation-for="PictureSubSecondFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Count" class="control-label"></label>
+                <input asp-for="Count" accept="image/*" />
+                <span asp-validation-for="Count" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
