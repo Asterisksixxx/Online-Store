@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Online_Store.Models;
 using System.Diagnostics;
@@ -19,11 +20,10 @@ namespace Online_Store.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Guid id)
         {
-            return View(await _homeService.GetAllData());
+            return View(await _homeService.GetAllData(id));
         }
-
         public IActionResult Privacy()
         {
             return View();

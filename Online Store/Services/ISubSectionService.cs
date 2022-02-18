@@ -32,6 +32,7 @@ namespace Online_Store.Services
 
         public async Task<IEnumerable<SubSection>> GetAllAsync()
         {
+            await UpdateStatus();
             var listSubsections = _appDataContext.SubSections.AsNoTracking().
                 Include(section => section.Section);
             listSubsections.Include(section => section.Product);

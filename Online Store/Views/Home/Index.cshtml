@@ -1,8 +1,21 @@
 ﻿
 @model Online_Store.ViewModels.IndexViewModel
-@{
-    ViewData["Title"] = "Home Page";
-}
+<div class="row">
+@foreach(var sect in Model.Sections)
+    {
+        <div class="dropdown open m-1">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @sect.Name
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach (var subSect in sect.SubSections)
+                {
+                    <a class="dropdown-item" asp-controller="Home" asp-action="Index" asp-route-id="@subSect.Id">@subSect.Name</a>
+                }
+            </div>
+        </div>
+    }
+</div>
 <section class="d-flex justify-content-around flex-wrap">
     @foreach(var prod in Model.Product)
     {
@@ -10,10 +23,57 @@
             <img width="60" height="150" src="@("/image/"+prod.PictureGeneral)" class="card-img-top" alt="...">
             
             <div class="card-body">
-                <h5 class="card-title">@prod.Name</h5>
+                <h5 class="card-title text-truncate">@prod.Name</h5>
                 @if(prod.SubSection!=null){  <h6 class="card-title">@prod.SubSection.Name</h6>}
                 <p class="card-text text-truncate">@prod.Information</p>
-                <p class="card-text">Цена: @prod.Cost$</p>
+                <p class="card-text d-flex align-items-center">
+                    <span class="font-weight-bold mr-5"> Цена: @prod.Cost$</span>
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye-fill ml-5 mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                        <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                    </svg>
+                    @prod.ViewCount
+                </p>
+                @if(prod.Count==0)
+                        { <p class="card-text d-flex align-items-end"> <span class="mr-1">Количество: </span>
+                              <svg width="30" height="30" viewBox="0 0 16 16" class="bi bi-reception-0 text-danger " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M0 13.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                              </svg>
+                              </p>
+                        }
+                @if (prod.Count > 0 && prod.Count < 15)
+                {
+                    <p class="card-text d-flex align-items-end"> <span class="mr-1">Количество: </span>
+                        <svg width="30" height="30" viewBox="0 0 16 16" class="bi bi-reception-1 text-danger " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </p>
+                }
+                @if (prod.Count >= 15 && prod.Count < 50)
+                {
+                    <p class="card-text d-flex align-items-end"> <span class="mr-1">Количество: </span>
+                        <svg width="30" height="30" viewBox="0 0 16 16" class="bi bi-reception-2 text-info " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4 5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </p>
+                }
+                @if (prod.Count >= 50 && prod.Count < 200)
+                {
+                    <p class="card-text d-flex align-items-end"> <span class="mr-1">Количество: </span>
+                        <svg width="30" height="30" viewBox="0 0 16 16" class="bi bi-reception-3 text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </p>
+                } 
+                @if (prod.Count >= 200 && prod.Count < 1000000)
+                {
+                    <p class="card-text d-flex align-items-end"> <span class="mr-1">Количество: </span>
+                        <svg width="30" height="30" viewBox="0 0 16 16" class="bi bi-reception-4 text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-11z"/>
+                        </svg>
+                    </p>
+                }
+               
                 <a asp-controller="Product" asp-action="Details" asp-route-id="@prod.Id" class="btn btn-primary">Подробнее...</a>
             </div>
         </div>

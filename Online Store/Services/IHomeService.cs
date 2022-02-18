@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Online_Store.Data;
+using Online_Store.Models;
 using Online_Store.ViewModels;
 
 namespace Online_Store.Services
 {
    public interface IHomeService
     {
-        Task<IndexViewModel> GetAllData();
+        Task<IndexViewModel> GetAllData(Guid id);
     }
 
     public class HomeService : IHomeService
@@ -27,13 +29,31 @@ namespace Online_Store.Services
             _productService = productService;
         }
 
-        public async Task<IndexViewModel> GetAllData()
+        public async Task<IndexViewModel> GetAllData(Guid id)
         {
-            var products = (await _productService.GetAllAsync()).ToList();
-            return new IndexViewModel
+            var subSection = await _subSectionService.GetOneAsync(id);
+            if (subSection!=null)
             {
-                Product =products,
-            };
+                var sections= (await _sectionService.GetAllAsync()).ToList();
+                var products = (await _productService
+                    .GetAllFromSubSectionsAsync(subSection.Id)).ToList();
+                return new IndexViewModel
+                {
+                    Product = products,
+                    Sections = sections
+                };
+            }
+            else
+            {
+                var products = (await _productService.GetAllAsync()).ToList();
+                var sections = (await _sectionService.GetAllAsync()).ToList();
+                return new IndexViewModel
+                {
+                    Product = products,
+                    Sections = sections
+                };
+            }
+        
         }
     }
 }

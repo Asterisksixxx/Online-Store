@@ -13,6 +13,7 @@ namespace Online_Store.Services
     public interface IProductService
     {
       Task<IEnumerable<Product>>  GetAllAsync();
+      Task<IEnumerable<Models.Product>> GetAllFromSubSectionsAsync(Guid id);
        Task<Product> GetOneAsync(Guid id);
         Task CreateAsync(Product product);
         Task Delete(Guid id);
@@ -36,6 +37,11 @@ namespace Online_Store.Services
             var listProduct = _appDataContext.Products
                 .Include(p => p.SubSection).ThenInclude(s => s.Section);
             return await listProduct.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetAllFromSubSectionsAsync(Guid id)
+        {
+            return await _appDataContext.Products.Where(p => p.SubSectionId == id).ToListAsync();
         }
 
         public async Task<Product> GetOneAsync(Guid id)

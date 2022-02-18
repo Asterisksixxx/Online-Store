@@ -30,6 +30,7 @@ namespace Online_Store.Services
 
         public async Task<IEnumerable<Section>> GetAllAsync()
         {
+            await UpdateStatus();
             var sections =await _appDataContext.Sections.
                 Include(section => section.SubSections).ToListAsync();
           return sections;
