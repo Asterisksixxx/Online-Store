@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Online_Store</title>
+    <title>@ViewData["Title"] - Мощный Комп</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -12,25 +12,25 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Online_Store</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Мощный Комп</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                  
-                    <ul class="navbar-nav text-right border-0 p-0">
+                    <ul class="navbar-nav float-right border-0 p-0">
                         <li>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-danger">Account</button>
+                                <button type="button" class="btn btn-danger">Личный кабинет</button>
                                 <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="User" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)" asp-action="Details">@Context.User.FindFirst(ClaimsIdentity.DefaultNameClaimType).Value</a>
-                                    <a class="dropdown-item">My Order</a>
+                                    <a class="dropdown-item" asp-controller="User" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)" asp-action="Details">@(Context.User.FindFirst(ClaimsIdentity.DefaultNameClaimType)!.Value)</a>
+                                    <a class="dropdown-item" asp-controller="Basket" asp-action="Index" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)">Моя корзина</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+                                    <a class="dropdown-item" asp-controller="User" asp-action="Logout">Выйти</a>
                                 </div>
                             </div>
                         </li>

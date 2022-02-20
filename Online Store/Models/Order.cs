@@ -8,7 +8,8 @@ namespace Online_Store.Models
         public Guid Id { get; set; }
         public User User { get; set; }
         public Guid UserId { get; set; }
-        public List<Product> Products { get; set; }=new List<Product>();
+        public Basket Basket { get; set; }
+        public Guid BasketId { get; set; }
         public int ProductsCount { get; set; }
         public DateTime DateAndTime { get; set; }
         public double TotalCost { get; set; }

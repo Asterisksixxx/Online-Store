@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="00000000-0000-0000-0000-000000000000">Online_Store</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-id="00000000-0000-0000-0000-000000000000">Мощный Комп</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -32,15 +32,14 @@
                     <ul class="navbar-nav float-right border-0 p-0">
                         <li>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-danger">Account</button>
+                                <button type="button" class="btn btn-danger">Личный кабинет</button>
                                 <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="User" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType)" asp-action="Details">@Context.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType)</a>
-                                    <a class="dropdown-item">My Order</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-controller="User" asp-action="Logout">Logout</a>
+                                    <a class="dropdown-item" asp-controller="User" asp-action="Logout">Выйти</a>
                                 </div>
                             </div>
                         </li>

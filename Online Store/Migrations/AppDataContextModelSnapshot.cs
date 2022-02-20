@@ -35,6 +35,30 @@ namespace Online_Store.Migrations
                     b.ToTable("Baskets");
                 });
 
+            modelBuilder.Entity("Online_Store.Models.BasketProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BasketId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Count")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BasketId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("BasketProducts");
+                });
+
             modelBuilder.Entity("Online_Store.Models.NotConfirmUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -115,9 +139,6 @@ namespace Online_Store.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BasketId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
 
@@ -155,8 +176,6 @@ namespace Online_Store.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BasketId");
 
                     b.HasIndex("OrderId");
 
@@ -240,6 +259,7 @@ namespace Online_Store.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SubsectionCount")
@@ -257,12 +277,14 @@ namespace Online_Store.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ProductCount")
                         .HasColumnType("bigint");
 
                     b.Property<Guid?>("SectionId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -318,7 +340,7 @@ namespace Online_Store.Migrations
                         new
                         {
                             Id = new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
-                            DataBorn = new DateTime(2022, 2, 16, 23, 12, 17, 906, DateTimeKind.Local).AddTicks(8698),
+                            DataBorn = new DateTime(2022, 2, 20, 16, 21, 32, 26, DateTimeKind.Local).AddTicks(5528),
                             Email = "admin@admin.by",
                             Login = "admin",
                             Name = "admin",
@@ -340,6 +362,23 @@ namespace Online_Store.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Online_Store.Models.BasketProduct", b =>
+                {
+                    b.HasOne("Online_Store.Models.Basket", "Basket")
+                        .WithMany("ListProducts")
+                        .HasForeignKey("BasketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Online_Store.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Basket");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Online_Store.Models.NotConfirmUser", b =>
@@ -366,10 +405,6 @@ namespace Online_Store.Migrations
 
             modelBuilder.Entity("Online_Store.Models.Product", b =>
                 {
-                    b.HasOne("Online_Store.Models.Basket", null)
-                        .WithMany("ListProducts")
-                        .HasForeignKey("BasketId");
-
                     b.HasOne("Online_Store.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
@@ -400,7 +435,9 @@ namespace Online_Store.Migrations
                 {
                     b.HasOne("Online_Store.Models.Section", "Section")
                         .WithMany("SubSections")
-                        .HasForeignKey("SectionId");
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Section");
                 });

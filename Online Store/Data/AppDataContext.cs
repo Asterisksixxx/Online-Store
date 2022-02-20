@@ -55,5 +55,6 @@ namespace Online_Store.Data
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<BasketProduct> BasketProducts { get; set; }
     }
 }

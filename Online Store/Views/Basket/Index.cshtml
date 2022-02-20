@@ -1,0 +1,31 @@
+﻿@model Online_Store.ViewModels.IndexBasket
+@using System.Security.Claims
+<title>Корзина @Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType) </title>
+
+<section>
+    <div class="row mb-2">
+        <div class="col">Название товара</div>
+        <div class="col">Изображение</div>
+        <div class="col">Стоимость</div>
+        <div class="col">Количество</div>
+        <div class="col">Удаление</div>
+        <div class="col">Кол-во</div>
+    </div>
+    @foreach (var basketProduct in Model.ListProducts)
+    {
+        if (basketProduct.Product!=null)
+        {
+            <div class="row">
+                <div class="col">@basketProduct.Product.Name</div>
+                <div class="col"><img src=" @("~/image/"+basketProduct.Product.PictureGeneral)" alt="Picture" height="50" width="50" asp-append-version="true"/></div>
+                <div class="col">@basketProduct.Product.Cost руб.</div>
+                <div class="col">@basketProduct.Count</div>
+                <form asp-controller="Basket" asp-action="RemoveProduct" asp-route-basketproductId="@basketProduct.Id">
+                <div class="col"><input type="submit" value="Удалить товар"/></div>
+                <div class="col"><input type="number" aria-readonly="" id="count" name="count" value="1" min="1" max="@basketProduct.Count"/></div>
+                </form>
+            </div>
+        }
+    }
+    <a class="btn btn-primary" asp-controller="" asp-action="" >Оформить заказ</a>
+</section>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Online_Store.Models
 {
@@ -7,8 +8,8 @@ namespace Online_Store.Models
     {
         public Guid Id { get; set; }
         public User User { get; set; }
+        [Required]
         public Guid UserId { get; set; }
-        public List<Product> ListProducts { get; set; }=new List<Product>();
-        
+        public List<BasketProduct> ListProducts { get; set; }=new List<BasketProduct>();
     }
 }

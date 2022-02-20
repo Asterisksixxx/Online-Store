@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Online_Store.Models;
 using Online_Store.Services;
@@ -11,11 +9,13 @@ namespace Online_Store.Controllers
     {
         private readonly INotConfirmUserService _notConfirmUserService;
         private readonly IUserService _userService;
+        private readonly IBasketService _basketService;
 
-        public NotConfirmUserController(INotConfirmUserService notConfirmUserService, IUserService userService)
+        public NotConfirmUserController(INotConfirmUserService notConfirmUserService, IUserService userService, IBasketService basketService)
         {
             _notConfirmUserService = notConfirmUserService;
             _userService = userService;
+            _basketService = basketService;
         }
 
         public ActionResult Registration()
@@ -51,6 +51,7 @@ namespace Online_Store.Controllers
             if (notConfirmUser.Code == code)
             {
                 await _userService.CreateAsync(notConfirmUser);
+                await _basketService.CreateAsync(notConfirmUser.Id);
                 return RedirectToAction("Login", "User");
             }
             else

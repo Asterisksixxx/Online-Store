@@ -1,4 +1,5 @@
 ﻿@model Product 
+@using System.Security.Claims
 <div class="d-flex justify-content-center">
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
@@ -23,24 +24,27 @@
 </div>
 </div>
 <section class="d-flex justify-content-around">
-<div class="col-1">
-    <div class="row">Название</div>
-    <div class="row">Категория</div>
-    <div class="row">Характеристики и описание</div>
-    <div class="row">Цена</div>
-    <div class="row">Количество заказов</div>
-    <div class="row">Количество просмотров</div>
-</div>
-<div class="col-1">
-    <div class="row">@Model.Name</div>
-    <div class="row">@Model.SubSection</div>
-    <div class="row">@Model.Information</div>
-    <div class="row">@Model.Cost</div>
-    <div class="row">@Model.Count</div>
-    <div class="row">@Model.OrderCount</div>
-    <div class="row">@Model.ViewCount</div>
-</div>
+    <div class="col-1">
+        <div class="row">Название</div>
+        <div class="row">Категория</div>
+        <div class="row">Характеристики и описание</div>
+        <div class="row">Цена</div>
+        <div class="row">Количество заказов</div>
+        <div class="row">Количество просмотров</div>
+    </div>
+    <div class="col-1">
+        <div class="row">@Model.Name</div>
+        <div class="row">@Model.SubSection</div>
+        <div class="row">@Model.Information</div>
+        <div class="row">@Model.Cost</div>
+        <div class="row">@Model.Count</div>
+        <div class="row">@Model.OrderCount</div>
+        <div class="row">@Model.ViewCount</div>
+    </div>
 </section>
+<form asp-controller="Basket" asp-route-productId="@Model.Id" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)" asp-action="Update" method="post">
+<input type="number" id="count" name="count" value="1" asp-route="count" max="@Model.Count" min="1"/>
 <div>
-    <a class="btn btn-primary" asp-action="">Добавить в корзину</a>
+    <input type="submit" value="Добавить в корзину"/>
 </div>
+</form>

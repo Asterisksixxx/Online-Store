@@ -86,9 +86,9 @@ namespace Online_Store.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid productId)
         {
-            return View(await _productService.GetOneAsync(id));
+            return View(await _productService.GetOneAsync(productId));
         }
     }
 }

@@ -38,6 +38,8 @@ namespace Online_Store
             services.AddScoped<ISubSectionService, SubSectionService>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IBasketProductService, BasketProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
