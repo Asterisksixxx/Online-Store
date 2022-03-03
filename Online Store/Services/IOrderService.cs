@@ -7,8 +7,8 @@ namespace Online_Store.Services
         Task CreateAsync();
     }
 
-    public class OrderService : IOrderService
-    {
+    //public class OrderService : IOrderService
+    //{
         
-    }
+    //}
 }
