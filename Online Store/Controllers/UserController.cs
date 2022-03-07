@@ -57,7 +57,7 @@ namespace Online_Store.Controllers
                await Authenticate(user);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "Not correct Login or Password");
+            ModelState.AddModelError("", "Введены неверные данные");
             return View(use);
         }
         public async Task Authenticate(User user)

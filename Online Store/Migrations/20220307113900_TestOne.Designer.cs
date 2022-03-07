@@ -10,15 +10,15 @@ using Online_Store.Data;
 namespace Online_Store.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20220220132132_BaskProd")]
-    partial class BaskProd
+    [Migration("20220307113900_TestOne")]
+    partial class TestOne
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.13")
+                .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Online_Store.Models.Basket", b =>
@@ -32,7 +32,8 @@ namespace Online_Store.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Baskets");
                 });
@@ -51,6 +52,9 @@ namespace Online_Store.Migrations
 
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("SumCost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -116,14 +120,14 @@ namespace Online_Store.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateAndTime")
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductsCount")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalCost")
-                        .HasColumnType("float");
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -156,9 +160,6 @@ namespace Online_Store.Migrations
                     b.Property<int>("OrderCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("PictureGeneral")
                         .HasColumnType("nvarchar(100)");
 
@@ -178,8 +179,6 @@ namespace Online_Store.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("SubSectionId");
 
@@ -342,7 +341,7 @@ namespace Online_Store.Migrations
                         new
                         {
                             Id = new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
-                            DataBorn = new DateTime(2022, 2, 20, 16, 21, 32, 26, DateTimeKind.Local).AddTicks(5528),
+                            DataBorn = new DateTime(2022, 3, 7, 14, 38, 59, 125, DateTimeKind.Local).AddTicks(6948),
                             Email = "admin@admin.by",
                             Login = "admin",
                             Name = "admin",
@@ -358,8 +357,8 @@ namespace Online_Store.Migrations
             modelBuilder.Entity("Online_Store.Models.Basket", b =>
                 {
                     b.HasOne("Online_Store.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Basket")
+                        .HasForeignKey("Online_Store.Models.Basket", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -397,7 +396,7 @@ namespace Online_Store.Migrations
             modelBuilder.Entity("Online_Store.Models.Order", b =>
                 {
                     b.HasOne("Online_Store.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -407,10 +406,6 @@ namespace Online_Store.Migrations
 
             modelBuilder.Entity("Online_Store.Models.Product", b =>
                 {
-                    b.HasOne("Online_Store.Models.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("Online_Store.Models.SubSection", "SubSection")
                         .WithMany("Product")
                         .HasForeignKey("SubSectionId");
@@ -460,11 +455,6 @@ namespace Online_Store.Migrations
                     b.Navigation("ListProducts");
                 });
 
-            modelBuilder.Entity("Online_Store.Models.Order", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("Online_Store.Models.Product", b =>
                 {
                     b.Navigation("Reviews");
@@ -482,6 +472,10 @@ namespace Online_Store.Migrations
 
             modelBuilder.Entity("Online_Store.Models.User", b =>
                 {
+                    b.Navigation("Basket");
+
+                    b.Navigation("Orders");
+
                     b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618

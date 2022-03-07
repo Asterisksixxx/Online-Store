@@ -40,8 +40,7 @@ namespace Online_Store.Services
        }
        public bool Check(string name, string login)
        {
-           if (_appDataContext.NotConfirmUsers.FirstOrDefault(u => u.Name == name) != null) return true;
-           if (_appDataContext.NotConfirmUsers.FirstOrDefault(u => u.Login==login) != null) return true;
+           if (_appDataContext.NotConfirmUsers.FirstOrDefault(u => u.Name == name && u.Login==login) != null) return true;
            return false;
        }
 

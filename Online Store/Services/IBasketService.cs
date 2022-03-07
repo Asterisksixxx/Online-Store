@@ -49,6 +49,7 @@ namespace Online_Store.Services
             {
                 basket.ListProducts.Remove(basketItem);
                 basketItem.Count = basketItem.Count + count;
+                basketItem.SumCost = basketItem.Count * basketItem.Product.Cost;
                 basket.ListProducts.Add(basketItem);
             }
             if (basketItem != null)
@@ -76,6 +77,7 @@ namespace Online_Store.Services
                     Count = count,
                     BasketId = basket.Id,
                     Basket = basket,
+                    SumCost = count *(await _appDataContext.Products.FirstOrDefaultAsync(p => p.Id == productId)).Cost
                 };
                 await _basketProductService.CreateAsync(basketProduct);
             }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Online_Store.Migrations
 {
-    public partial class BaskProd : Migration
+    public partial class TestOne : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -130,9 +130,9 @@ namespace Online_Store.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductsCount = table.Column<int>(type: "int", nullable: false),
-                    DateAndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalCost = table.Column<double>(type: "float", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,18 +160,11 @@ namespace Online_Store.Migrations
                     PictureSubSecond = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Score = table.Column<double>(type: "float", nullable: false),
                     ViewCount = table.Column<int>(type: "int", nullable: false),
-                    OrderCount = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    OrderCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Products_SubSections_SubSectionId",
                         column: x => x.SubSectionId,
@@ -187,7 +180,8 @@ namespace Online_Store.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BasketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Count = table.Column<long>(type: "bigint", nullable: false)
+                    Count = table.Column<long>(type: "bigint", nullable: false),
+                    SumCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,7 +248,7 @@ namespace Online_Store.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "DataBorn", "Email", "Login", "Name", "Number", "Password", "ProductScore", "RoleId", "Surname", "Year" },
-                values: new object[] { new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"), new DateTime(2022, 2, 20, 16, 21, 32, 26, DateTimeKind.Local).AddTicks(5528), "admin@admin.by", "admin", "admin", "+37500000000", "admin", 0, new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"), "admin", 0 });
+                values: new object[] { new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"), new DateTime(2022, 3, 7, 14, 38, 59, 125, DateTimeKind.Local).AddTicks(6948), "admin@admin.by", "admin", "admin", "+37500000000", "admin", 0, new Guid("7645e9b7-f9ed-460d-997a-bda7af4c9f8b"), "admin", 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BasketProducts_BasketId",
@@ -269,7 +263,8 @@ namespace Online_Store.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Baskets_UserId",
                 table: "Baskets",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_NotConfirmUsers_RoleId",
@@ -280,11 +275,6 @@ namespace Online_Store.Migrations
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_OrderId",
-                table: "Products",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SubSectionId",
@@ -321,6 +311,9 @@ namespace Online_Store.Migrations
                 name: "NotConfirmUsers");
 
             migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
@@ -330,19 +323,16 @@ namespace Online_Store.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "SubSections");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Sections");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
         }
     }
 }

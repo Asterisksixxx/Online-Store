@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Models;
+using Online_Store.ViewModels;
 
 namespace Online_Store.Data
 {

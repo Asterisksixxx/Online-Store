@@ -8,7 +8,6 @@ namespace Online_Store.Models
     {
         public Guid Id { get; set; }
         public User User { get; set; }
-        [Required]
         public Guid UserId { get; set; }
         public List<BasketProduct> ListProducts { get; set; }=new List<BasketProduct>();
     }

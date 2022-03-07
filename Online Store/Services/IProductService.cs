@@ -19,6 +19,7 @@ namespace Online_Store.Services
         Task Delete(Guid id);
         Task Update(Product product);
         Task SavePicture(Product product);
+        Task DecCount(Guid userId);
     }
 
     public class ProductService : IProductService
@@ -63,10 +64,10 @@ namespace Online_Store.Services
            await _appDataContext.SaveChangesAsync();
         }
 
-        public Task Update(Product product)
+        public async Task Update(Product product)
         {
             _appDataContext.Products.Update(product);
-            return _appDataContext.SaveChangesAsync();
+            await _appDataContext.SaveChangesAsync();
         }
 
         public async Task SavePicture(Product product)
@@ -100,6 +101,22 @@ namespace Online_Store.Services
                 {
                     await product.PictureSubSecondFile.CopyToAsync(fs);
                 }
+        }
+
+        public async Task DecCount(Guid userId)
+        {
+
+           var basket= await _appDataContext.Baskets
+                .Include(b => b.ListProducts)
+                .ThenInclude(p =>p.Product )
+                .FirstOrDefaultAsync(b => b.UserId == userId);
+           foreach (var baskProd in basket.ListProducts)
+           {
+              var product= await _appDataContext.Products.FirstOrDefaultAsync(p => p.Id == baskProd.Product.Id);
+              product.Count-=Convert.ToInt32(baskProd.Count);
+              await Update(product);
+           }
+           basket.ListProducts.Clear();
         }
     }
 }

@@ -40,6 +40,7 @@ namespace Online_Store.Services
 
         public async Task CreateAsync(BasketProduct basketProduct)
         {
+            basketProduct.SumCost = basketProduct.Count * basketProduct.Product.Cost;
             await _appDataContext.BasketProducts.AddAsync(basketProduct);
             await _appDataContext.SaveChangesAsync();
         }

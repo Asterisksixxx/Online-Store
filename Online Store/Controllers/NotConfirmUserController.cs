@@ -34,7 +34,7 @@ namespace Online_Store.Controllers
                 return RedirectToAction("Confirm", "NotConfirmUser", notConfirmUser);
             }
             else
-                ModelState.AddModelError("", "The user already exists");
+                ModelState.AddModelError("", "Пользователь с такими данными уже существует");
 
             return View(notConfirmUser);
         }
@@ -57,7 +57,7 @@ namespace Online_Store.Controllers
             else
             {
                 IEmailService mailService = new EmailService();
-                await mailService.SendEmailAsync(notConfirmUser.Email, "Confirm Account and Email",
+                await mailService.SendEmailAsync(notConfirmUser.Email, "Подтвердите свою почту",
                     notConfirmUser.Code);
                 return RedirectToAction("Confirm");
             }

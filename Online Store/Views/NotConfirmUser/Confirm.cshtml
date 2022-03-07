@@ -1,9 +1,9 @@
 ﻿@model NotConfirmUser
-<h6>Don't close this Page</h6>
+<h6>Не закрывайте эту страницу, в данный момент маршрутизация не настроена</h6>
 <div>
-    <p>A code has been sent to your email, enter it here to confirm the mail and add a user</p>
+    <p>Сообщение с вашим кодом подтверждения был отправлен на почту</p>
 </div>
 <form asp-controller="NotConfirmUser" asp-action="Confirm" method="post">
     <input name="code" type="text" id="code" />
-    <input class="btn btn-primary" type="submit" asp-route="@Model"/>
+    <input class="btn btn-primary" type="submit" value="Подтвердить" asp-route="@Model"/>
 </form>

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
+using Online_Store.Models;
 using Online_Store.Services;
 
 namespace Online_Store
@@ -40,6 +41,7 @@ namespace Online_Store
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<IBasketProductService, BasketProductService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
