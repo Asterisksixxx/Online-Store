@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Section>
         <div class="row pb-2">
-    <div class="col ">Section name</div>
-    <div class="col ">Subsection count</div>
+    <div class="col ">Название категории</div>
+    <div class="col ">Количество подкатегории</div>
             <div class="col ">
-                <a class="btn btn-danger" asp-controller="Section" asp-action="Create">Create new Section</a>
+                <a class="btn btn-danger" asp-controller="Section" asp-action="Create">Добавить новую категорию</a>
                 <form class="float-right" asp-controller="Section" asp-action="UpdateStatusSection" method="post">
-                    <input class="btn badge-primary" type="submit" value="Update Status"/>
+                    <input class="btn badge-primary" type="submit" value="Обновить статус"/>
                 </form>
             </div>
 </div>
@@ -15,8 +15,8 @@
         <div class="col ">@sec.Name</div>
         <div class="col ">@sec.SubsectionCount</div>
         <div class="col ">
-            <a class="btn btn-info" asp-controller="Section" asp-route-id="@sec.Id" asp-action="UpdateSection">Update</a>
-            <a class="btn btn-info" asp-controller="Section" asp-route-id="@sec.Id" asp-action="DeleteSection">Delete</a>
+            <a class="btn btn-info" asp-controller="Section" asp-route-id="@sec.Id" asp-action="UpdateSection">Редактировать</a>
+            <a class="btn btn-info" asp-controller="Section" asp-route-id="@sec.Id" asp-action="DeleteSection">Удалить</a>
         </div>
     </div>
 }

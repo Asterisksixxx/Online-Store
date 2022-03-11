@@ -23,5 +23,6 @@ namespace Online_Store.Models
         public List<Review> Reviews { get; set; }=new List<Review>();
         public List<Order> Orders { get; set; } = new List<Order>();
         public int ProductScore { get; set; }
+        public uint Points { get; set; }
     }
 }

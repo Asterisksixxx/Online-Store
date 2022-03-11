@@ -10,7 +10,7 @@
             <input hidden="" asp-for="TotalCost"/>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input readonly="" value="@(Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType))"/>
+                <label class="text-info">@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)</label>
             </div>
 
             <div class="form-group">
@@ -22,25 +22,32 @@
                     <input type="text" asp-for="AddressStreet" class="form-control">
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="">Дом и Квартира</span>
                     </div>
                     <input type="text" asp-for="AddressHome" class="form-control">
-                    <input type="text" asp-for="AddressApartment" class="form-control">
+                    <input type="text" asp-for="AddressApartment" placeholder="(Не обязательно)" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label">@DateTime.Now</label>
             </div>
             <div class="form-group">
-              <label class="text-info">Итоговая стоимость заказа: @Model.TotalCost руб.</label>
+                <label class="text-info">Итоговая стоимость заказа: @Model.TotalCost руб.</label>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Заказать" class="btn btn-primary"/>
-            </div>
+            @if(Model.TotalCost==0)
+            { <div class="form-group">
+                  <input disabled="disabled" type="submit" value="Заказать" class="btn btn-primary"/>
+              </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <input type="submit" value="Заказать" class="btn btn-primary"/>
+                </div>
+            }
         </form>
     </div>
 </div>

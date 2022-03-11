@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<Product>
 <div class="row pb-2">
-    <div class="col ">Name</div>
-    <div class="col ">SubSection</div>
-    <div class="col ">Section</div>
-    <div class="col ">Picture</div>
-    <div class="col ">Cost</div>
-    <div class="col ">Score</div>
-    <div class="col ">ViewCount</div>
+    <div class="col ">Название товара</div>
+    <div class="col ">Подкатегория</div>
+    <div class="col ">Категория</div>
+    <div class="col ">Изображение</div>
+    <div class="col ">Стоимость бел.руб</div>
+    <div class="col ">Оценка</div>
+    <div class="col ">Просмотров</div>
     <div class="col ">
-        <a class="btn btn-danger" asp-controller="Product" asp-action="Create">Create new</a>
+        <a class="btn btn-danger" asp-controller="Product" asp-action="Create">Добавить товар</a>
     </div>
 </div>
 @foreach (var sec in Model)
@@ -38,8 +38,8 @@
     <div class="col ">@sec.Score</div>
     <div class="col ">@sec.ViewCount</div>
     <div class="col ">
-        <a class="btn btn-info" asp-controller="Product"  asp-route-id="@sec.Id" asp-action="UpdateProduct">Update</a>
-        <a class="btn btn-info" asp-controller="Product" asp-route-id="@sec.Id" asp-action="Delete">Delete</a>
+        <a class="btn btn-info" asp-controller="Product"  asp-route-id="@sec.Id" asp-action="Update">Редактировать</a>
+        <a class="btn btn-info" asp-controller="Product" asp-route-id="@sec.Id" asp-action="Delete">Удалить</a>
     </div>
 </div>
 }

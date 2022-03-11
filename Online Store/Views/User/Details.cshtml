@@ -3,16 +3,15 @@
     <h2 class="pr-2">@Model.Name</h2>
     <h2>@Model.Surname</h2>
 </div>
-<div class="row">
-    <div class="pr-2">
-        <div class="p-3">Name</div>
-        <div class="pb-2 ">Surname</div>
-        <div class="pb-2 ">Email</div>
-        <div class="pb-2 ">Data Born</div>
-        <div class="pb-2 ">Edit Data Born</div>
-        <div class="pb-2 ">Phone Number</div>
+<section class="d-flex justify-content-around">
+    <div class="col-1">
+        <div class="">Имя</div>
+        <div class="">Фамилия</div>
+        <div class="">Эл.почта</div>
+        <div class="">Дата рождения</div>
+        <div class="">Мобильный телефон</div>
     </div>
-    <div class="d-flex flex-column">
+    <div class=" col-2 ">
         <label>@Model.Name</label>
         <label>@Model.Surname</label>
         <label>@Model.Email</label>
@@ -20,8 +19,8 @@
         <label>@Model.Number</label>
         <input type="hidden" asp-for="Id" value="@Model.Id"/>
     </div>
-</div>
+</section>
 <div>
-    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Back to Home</a>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Вернуться на главную</a>
 </div>
 

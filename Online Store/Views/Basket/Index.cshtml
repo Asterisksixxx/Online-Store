@@ -8,8 +8,6 @@
         <div class="col">Изображение</div>
         <div class="col">Стоимость</div>
         <div class="col">Количество</div>
-        <div class="col">Удаление</div>
-        <div class="col">Кол-во</div>
     </div>
     @foreach (var basketProduct in Model.ListProducts)
     {
@@ -27,5 +25,12 @@
             </div>
         }
     }
-    <a class="btn btn-primary" asp-controller="Order" asp-action="Create" >Оформить заказ</a>
+    @if (Model.ListProducts.Count == 0)
+    {
+
+    }
+    else
+    {
+        <a class="btn btn-primary" asp-controller="Order" asp-action="Create" >Оформить заказ</a>
+    }
 </section>

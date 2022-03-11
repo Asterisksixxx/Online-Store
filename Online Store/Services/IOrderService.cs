@@ -27,7 +27,7 @@ namespace Online_Store.Services
             {
                 UserId = viewModel.UserId,
                 Address ="Г. "+ viewModel.AddressCity+" ул. "+viewModel.AddressStreet+" д. "+viewModel.AddressHome+" кв. "+ viewModel.AddressApartment,
-                Date = DateTime.Now.Date,
+                Date = DateTime.Now,
                 TotalCost = viewModel.TotalCost,
                 User = await _db.Users.FirstOrDefaultAsync(u =>u.Id==viewModel.UserId),
             };

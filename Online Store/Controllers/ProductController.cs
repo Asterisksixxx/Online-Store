@@ -58,17 +58,17 @@ namespace Online_Store.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateProduct(Guid id)
+        public async Task<IActionResult> Update(Guid id)
         {
             var subSec = await _subSectionService.GetAllAsyncForProduct();
             ViewBag.Subsection = new SelectList(subSec, "Id", "Name");
-            return View(await _productService.GetOneAsync(id));
+            return View(await _productService.FindProductForUpdate(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProduct(Product product)
+        public async Task<IActionResult> Update(UpdateProductViewModel viewModel)
         {
-            await _productService.Update(product);
+            await _productService.Update(viewModel);
           return RedirectToAction("Index", "Product");
         }
 

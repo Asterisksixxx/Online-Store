@@ -4,62 +4,60 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Product</h4>
+<h1>Добавление товара</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Product" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="SubSectionId" class="control-label"></label>
+                <label asp-for="SubSectionId" class="control-label">Подкатегория</label>
                 <select asp-for="SubSectionId" class ="form-control" asp-items="ViewBag.Subsection"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Название</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
+                <label asp-for="Cost" class="control-label">Стоимость</label>
                 <input asp-for="Cost" class="form-control" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Information" class="control-label"></label>
+                <label asp-for="Information" class="control-label">Информация</label>
               <textarea class="form-control" asp-for="Information"></textarea>
                 <span asp-validation-for="Information" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PictureGeneralFile" class="control-label"></label>
+                <label asp-for="PictureGeneralFile" class="control-label">Главное изображение</label>
                 <input asp-for="PictureGeneralFile" accept="image/*" />
                 <span asp-validation-for="PictureGeneralFile" class="text-danger"></span>
             </div> 
             <div class="form-group">
-                <label asp-for="PictureSecondFile" class="control-label"></label>
+                <label asp-for="PictureSecondFile" class="control-label">Изображение</label>
                 <input asp-for="PictureSecondFile" accept="image/*" />
                 <span asp-validation-for="PictureSecondFile" class="text-danger"></span>
             </div>  
             <div class="form-group">
-                <label asp-for="PictureSubSecondFile" class="control-label"></label>
+                <label asp-for="PictureSubSecondFile" class="control-label">Изображение 1</label>
                 <input asp-for="PictureSubSecondFile" accept="image/*" />
                 <span asp-validation-for="PictureSubSecondFile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Count" class="control-label"></label>
+                <label asp-for="Count" class="control-label">Количество</label>
                 <input asp-for="Count" accept="image/*" />
                 <span asp-validation-for="Count" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться к списку</a>
 </div>
 
 @section Scripts {

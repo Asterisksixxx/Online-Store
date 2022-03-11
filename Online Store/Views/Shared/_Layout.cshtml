@@ -21,6 +21,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                  
                     <ul class="navbar-nav float-right border-0 p-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="User" asp-action="Details" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)">Личный кабинет</a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Basket" asp-action="Index" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)">Моя корзина</a>
+                        </li>
                         <li>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-danger">Личный кабинет</button>

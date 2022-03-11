@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Online_Store.Data;
 using Online_Store.Models;
+using Online_Store.ViewModels;
 
 namespace Online_Store.Services
 {
@@ -17,7 +18,8 @@ namespace Online_Store.Services
        Task<Product> GetOneAsync(Guid id);
         Task CreateAsync(Product product);
         Task Delete(Guid id);
-        Task Update(Product product);
+        Task<UpdateProductViewModel> FindProductForUpdate(Guid id);
+        Task Update(UpdateProductViewModel viewModel);
         Task SavePicture(Product product);
         Task DecCount(Guid userId);
     }
@@ -64,8 +66,53 @@ namespace Online_Store.Services
            await _appDataContext.SaveChangesAsync();
         }
 
-        public async Task Update(Product product)
+        public async Task<UpdateProductViewModel> FindProductForUpdate(Guid id)
         {
+            var product = await _appDataContext.Products
+                .AsNoTracking()
+                .Include(p => p.SubSection)
+                .FirstOrDefaultAsync(product => product.Id == id);
+            return new UpdateProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Cost =Convert.ToString(product.Cost),
+                Count = product.Count,
+                Information = product.Information,
+                ViewCount = product.ViewCount,
+                SubSectionId = product.SubSectionId,
+                Score = product.Score,
+                OrderCount = product.OrderCount,
+                SubSection = product.SubSection
+            };
+        }
+
+        public async Task Update(UpdateProductViewModel viewModel)
+        {
+            var oldproduct = await _appDataContext.Products
+                .AsNoTracking()
+                .FirstOrDefaultAsync(pr => pr.Id == viewModel.Id);
+            viewModel.Cost = viewModel.Cost.Replace(".", ",");
+            var cost = Convert.ToDecimal(viewModel.Cost);
+            Product product = new Product()
+            {
+                Id = viewModel.Id,
+                Count = viewModel.Count,
+                Cost = cost,
+                Information = viewModel.Information,
+                Name = viewModel.Name,
+                OrderCount = viewModel.OrderCount,
+                Score = viewModel.Score,
+                ViewCount = viewModel.ViewCount,
+                SubSectionId = viewModel.SubSectionId,
+                PictureGeneral = oldproduct.PictureGeneral,
+                PictureSecond = oldproduct.PictureSecond,
+                PictureSubSecond = oldproduct.PictureSubSecond,
+                PictureGeneralFile = oldproduct.PictureGeneralFile,
+                PictureSecondFile = oldproduct.PictureSecondFile,
+                PictureSubSecondFile = oldproduct.PictureSubSecondFile,
+                Reviews = oldproduct.Reviews,
+            };
             _appDataContext.Products.Update(product);
             await _appDataContext.SaveChangesAsync();
         }
@@ -107,6 +154,7 @@ namespace Online_Store.Services
         {
 
            var basket= await _appDataContext.Baskets
+               .AsNoTracking()
                 .Include(b => b.ListProducts)
                 .ThenInclude(p =>p.Product )
                 .FirstOrDefaultAsync(b => b.UserId == userId);
@@ -114,9 +162,12 @@ namespace Online_Store.Services
            {
               var product= await _appDataContext.Products.FirstOrDefaultAsync(p => p.Id == baskProd.Product.Id);
               product.Count-=Convert.ToInt32(baskProd.Count);
-              await Update(product);
+               _appDataContext.Products.Update(product);
+               await _appDataContext.SaveChangesAsync();
+              product.OrderCount++;
            }
            basket.ListProducts.Clear();
+           await _appDataContext.SaveChangesAsync();
         }
     }
 }

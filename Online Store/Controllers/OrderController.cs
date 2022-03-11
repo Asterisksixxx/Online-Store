@@ -34,7 +34,7 @@ namespace Online_Store.Controllers
         {
             await _productService.DecCount(viewModel.UserId);
             await _orderService.CreateAsync(viewModel);
-            return RedirectToAction("Index", "Basket");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

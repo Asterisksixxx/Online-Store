@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<SubSection>
 <div class="row pb-2">
-    <div class="col ">SubSection name</div>
-    <div class="col ">Section Name</div>
-    <div class="col ">Product Count</div>
+    <div class="col ">Название</div>
+    <div class="col ">Категория</div>
+    <div class="col ">Товаров</div>
     <div class="col ">
-        <a class="btn btn-danger" asp-controller="SubSection" asp-action="Create">Create new</a>
+        <a class="btn btn-danger" asp-controller="SubSection" asp-action="Create">Создать подкатегорию</a>
         <form class="float-right" asp-controller="SubSection" asp-action="UpdateAllSubSection" method="post">
-            <input class="btn badge-primary" type="submit" value="Update Status"/>
+            <input class="btn badge-primary" type="submit" value="Обновить статус"/>
         </form>
     </div>
 </div>
@@ -17,8 +17,8 @@
         <div class="col ">@sec.Section.Name</div>
         <div class="col ">@sec.ProductCount</div>
         <div class="col ">
-            <a class="btn btn-info" asp-controller="SubSection" asp-route-id="@sec.Id" asp-action="UpdateSubSection">Update</a>
-            <a class="btn btn-info" asp-controller="SubSection" asp-route-id="@sec.Id" asp-action="DeleteSubSection">Delete</a>
+            <a class="btn btn-info" asp-controller="SubSection" asp-route-id="@sec.Id" asp-action="UpdateSubSection">Редактировать</a>
+            <a class="btn btn-info" asp-controller="SubSection" asp-route-id="@sec.Id" asp-action="DeleteSubSection">Удалить</a>
         </div>
     </div>
 }
