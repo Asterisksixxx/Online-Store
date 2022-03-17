@@ -34,7 +34,12 @@ namespace Online_Store.Controllers
         {
             await _productService.DecCount(viewModel.UserId);
             await _orderService.CreateAsync(viewModel);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ConfirmSucces");
+        }
+        [HttpGet]
+        public IActionResult ConfirmSucces()
+        {
+            return View();
         }
     }
 }

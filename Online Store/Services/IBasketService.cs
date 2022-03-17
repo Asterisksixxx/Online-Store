@@ -43,7 +43,10 @@ namespace Online_Store.Services
         {
             var user = await _appDataContext.Users.FirstOrDefaultAsync(u => u.Login == login);
             var basket = await _appDataContext.Baskets.FirstOrDefaultAsync(b => b.UserId == user.Id);
-            var basketItem = await _appDataContext.BasketProducts.FirstOrDefaultAsync(p => p.Product.Id == productId);
+            var basketItem = await _appDataContext.BasketProducts
+                .AsNoTracking()
+                .Include(p=>p.Product)
+                .FirstOrDefaultAsync(p => p.Product.Id == productId);
            
             if (basket.ListProducts.Contains(basketItem))
             {

@@ -19,19 +19,33 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                 
-                    <ul class="navbar-nav float-right border-0 p-0">
+               
+                   <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="User" asp-action="Details" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)">Личный кабинет</a>
                         </li> 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Basket" asp-action="Index" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)">Моя корзина</a>
                         </li>
+                          <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="Login">
+                                О нас
+                             <i class="fa fa-users" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="Login">
+                                Часто задаваемые вопросы
+                                <i class="fa fa-comments" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        </ul>
+                          <ul class="navbar-nav float-right border-0 p-0">
                         <li>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-danger">Личный кабинет</button>
                                 <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
+                                    <span class="sr-only">Выпадающее меню</span>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" asp-controller="User" asp-route-login="@Context.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)" asp-action="Details">@(Context.User.FindFirst(ClaimsIdentity.DefaultNameClaimType)!.Value)</a>

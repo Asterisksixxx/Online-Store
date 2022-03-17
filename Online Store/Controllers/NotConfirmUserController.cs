@@ -28,13 +28,14 @@ namespace Online_Store.Controllers
         {
 
             if (!ModelState.IsValid) return View();
-            if (!_notConfirmUserService.Check(notConfirmUser.Name, notConfirmUser.Login))
+            if (!_notConfirmUserService.Check(notConfirmUser.Login, notConfirmUser.Email))
             {
                 await _notConfirmUserService.CreateAsync(notConfirmUser);
                 return RedirectToAction("Confirm", "NotConfirmUser", notConfirmUser);
             }
             else
-                ModelState.AddModelError("", "Пользователь с такими данными уже существует");
+                ModelState.AddModelError("", "Пользователь с такими данными уже существует," +
+                    " Логин или Эл.Почта уже есть в базе данных, попробуйте авторизоваться");
 
             return View(notConfirmUser);
         }

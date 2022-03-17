@@ -15,7 +15,7 @@ namespace Online_Store.Services
         Task CreateAsync(NotConfirmUser notConfirmUser);
         Task Delete(Guid id);
         Task Update(NotConfirmUser notConfirmUser);
-        bool Check(string name, string login);
+        bool Check(string login, string email);
     }
 
    public class NotConfirmUserService : INotConfirmUserService
@@ -38,9 +38,9 @@ namespace Online_Store.Services
        {
            return await _appDataContext.NotConfirmUsers.FirstOrDefaultAsync(user => user.Id == id);
        }
-       public bool Check(string name, string login)
+       public bool Check(string login, string email)
        {
-           if (_appDataContext.NotConfirmUsers.FirstOrDefault(u => u.Name == name && u.Login==login) != null) return true;
+           if (_appDataContext.NotConfirmUsers.FirstOrDefault(u=>u.Login==login && u.Email==email) != null) return true;
            return false;
        }
 

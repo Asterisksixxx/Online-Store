@@ -1,6 +1,6 @@
 ﻿
 @model Online_Store.ViewModels.IndexViewModel
-<div class="row mb-3">
+<div class="row mb-3 d-flex align-content-center flex-lg-wrap justify-content-around">
     <a class=" btn btn-secondary" asp-controller="Home" asp-action="Index" asp-route-id="00000000-0000-0000-0000-000000000000">Все товары</a>
     @foreach (var sect in Model.Sections)
     {
@@ -92,5 +92,8 @@
 }
 else
 {
-    <h1 class="d-flex justify-content-around">В этом разделе пока ничего нет</h1>
+    <section class="d-flex flex-column justify-content-around" >
+        <h1>В этом разделе пока ничего нет</h1>
+    </section>
+    
 }
