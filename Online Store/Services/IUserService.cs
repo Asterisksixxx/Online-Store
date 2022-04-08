@@ -32,7 +32,10 @@ namespace Online_Store.Services
 
        public async Task<IEnumerable<User>> GetAsync()
        {
-           return await _appDataContext.Users.ToListAsync();
+           return await _appDataContext.Users
+                .AsNoTracking()
+                .Include(u=>u.Role)
+                .ToListAsync();
        }
 
        public async Task<User>  GetOne(string login, string password)

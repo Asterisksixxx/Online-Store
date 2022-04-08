@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;using Online_Store.Data;
@@ -11,6 +12,7 @@ namespace Online_Store.Services
     {
         Task CreateAsync(CreateOrderViewModel createOrderViewModel);
         Task<CreateOrderViewModel> FindUser(string login);
+        Task<IEnumerable<Order>> GetAllAsync();
     }
 
     public class OrderService : IOrderService
@@ -48,6 +50,14 @@ namespace Online_Store.Services
                 UserId =userId,
                 TotalCost = basket.ListProducts.Sum(pr => pr.SumCost),
             };
+        }
+
+        public async Task<IEnumerable<Order>> GetAllAsync() 
+        {
+           return await _db.Orders
+                .AsNoTracking()
+                .Include(o=>o.User)
+                .ToListAsync();
         }
     }
 }

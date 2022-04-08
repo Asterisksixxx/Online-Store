@@ -49,7 +49,8 @@ namespace Online_Store.Services
 
         public async Task<Product> GetOneAsync(Guid id)
         {
-            return await _appDataContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return await _appDataContext.Products.Include(p=>p.SubSection)
+                .FirstOrDefaultAsync(p => p.Id == id);
             
         }
 

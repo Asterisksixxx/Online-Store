@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Online_Store.Migrations
 {
-    public partial class Promocode : Migration
+    public partial class FinalUpdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,7 @@ namespace Online_Store.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
                 column: "DataBorn",
-                value: new DateTime(2022, 3, 11, 18, 12, 1, 950, DateTimeKind.Local).AddTicks(343));
+                value: new DateTime(2022, 3, 28, 21, 7, 46, 698, DateTimeKind.Local).AddTicks(4050));
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubSections_PromocodId",

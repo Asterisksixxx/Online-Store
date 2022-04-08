@@ -57,7 +57,9 @@ namespace Online_Store.Services
 
         public async Task UpdateAsync(Section section)
         {
-            var sections = _appDataContext.Sections.AsNoTracking().Include(section1 => section1.SubSections).ToList();
+            var sections = _appDataContext.Sections
+                .AsNoTracking()
+                .Include(section1 => section1.SubSections).ToList();
             var mainSection = sections.FirstOrDefault(section1 => section1.Id == section.Id);
             section.SubsectionCount = mainSection.SubSections.Count;
             _appDataContext.Sections.Update(section);

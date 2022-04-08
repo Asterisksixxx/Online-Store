@@ -24,6 +24,16 @@ namespace Online_Store.Controllers
         {
             return View(await _homeService.GetAllData(id));
         }
+        [HttpGet]
+        public IActionResult FAQ()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult AboutUS()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

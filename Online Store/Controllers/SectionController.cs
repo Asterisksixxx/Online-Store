@@ -65,9 +65,9 @@ namespace Online_Store.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteSection(Guid id)
+        public  async Task<IActionResult>  DeleteSection(Guid id)
         {
-            _sectionService.Delete(id);
+           await _sectionService.Delete(id);
             return RedirectToAction("Index", "Section");
         }
         

@@ -19,6 +19,11 @@ namespace Online_Store.Controllers
             _userService = userService;
             _appDataContext = appDataContext;
         }
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _userService.GetAsync());
+        }
 
         [HttpGet]
         public async Task<IActionResult> Details(string login)

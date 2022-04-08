@@ -10,8 +10,8 @@ using Online_Store.Data;
 namespace Online_Store.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20220311151202_Promocode")]
-    partial class Promocode
+    [Migration("20220328180747_FinalUpdate")]
+    partial class FinalUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -375,7 +375,7 @@ namespace Online_Store.Migrations
                         new
                         {
                             Id = new Guid("088075c9-5a9b-4583-b0e4-279886d46a5d"),
-                            DataBorn = new DateTime(2022, 3, 11, 18, 12, 1, 950, DateTimeKind.Local).AddTicks(343),
+                            DataBorn = new DateTime(2022, 3, 28, 21, 7, 46, 698, DateTimeKind.Local).AddTicks(4050),
                             Email = "admin@admin.by",
                             Login = "admin",
                             Name = "admin",

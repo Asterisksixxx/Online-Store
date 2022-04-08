@@ -17,9 +17,9 @@ namespace Online_Store.Controllers
             _productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _orderService.GetAllAsync());
         }
         [HttpGet]
         public async Task<IActionResult> Create()

@@ -28,10 +28,10 @@ namespace Online_Store.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveProduct(Guid basketProductId,uint count)
+        public async Task<IActionResult> RemoveProduct(Guid basketProductId,uint count, Guid basketId)
         {
             var login = HttpContext.User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType);
-            await _basketService.RemoveBasketProduct(basketProductId, count);
+            await _basketService.RemoveBasketProduct(basketProductId, count,basketId);
             return RedirectToAction("Index", "Basket",
                 routeValues: new {login});
         }
